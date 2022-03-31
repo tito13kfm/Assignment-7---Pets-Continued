@@ -23,7 +23,7 @@ namespace Assignment_7___Pets_Continued
 
                 //create new instances of Pet object
                 petArray[i] = new Pet()
-                { name = name, age = age, breed = breed };
+                { name = name, age = age, breed = breed , spayed = spayed};
                 Pet.totalNumberOfPets++;
                 Pet.sumOfAllPetAges += (int)age; //add the age of current pet to the sume of all pets
                 Pet.allFixed = Pet.allFixed & spayed; //This will return false if any single pet isn't fixed
@@ -74,7 +74,7 @@ namespace Assignment_7___Pets_Continued
             Console.WriteLine(border);
             foreach (Pet p in petArray)
             {
-                Console.WriteLine("You have a {0} named {1} who is {2} years old.", p.breed, p.name, p.age);
+                Console.WriteLine("You have a {0} named {1} who is {2} years old and is {3}fixed.", p.breed, p.name, p.age, p.spayed ? "" : "NOT ");
             }
             Console.WriteLine(border);
             Console.WriteLine((youngCount > 1) ? stringYoung + " are your youngest pets" : stringYoung + " is your youngest pet");

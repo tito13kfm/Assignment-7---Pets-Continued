@@ -6,6 +6,7 @@ namespace Assignment_7___Pets_Continued
     {
         public string name, breed;
         public int age;
+        public bool spayed;
         public static int totalNumberOfPets = 0, sumOfAllPetAges = 0;
         public static bool allFixed = true; // need to declare this true by default so any single false will make it false
 
