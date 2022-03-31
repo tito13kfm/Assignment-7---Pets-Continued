@@ -67,8 +67,6 @@ namespace Assignment_7___Pets_Continued
 
             }
 
-
-
             //Print the output
             Console.WriteLine();
             Console.WriteLine(border);
