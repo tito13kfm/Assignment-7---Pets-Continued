@@ -10,7 +10,7 @@ namespace Assignment_7___Pets_Continued
         public static int totalNumberOfPets = 0, sumOfAllPetAges = 0;
         public static bool allFixed = true; // need to declare this true by default so any single false will make it false
 
-        public static void PrintPetStats()
+        public static void PrintPetSummary()
         {
             Console.WriteLine("You have {0} pets", totalNumberOfPets);
             Console.WriteLine("Their ages add up to {0}", sumOfAllPetAges);

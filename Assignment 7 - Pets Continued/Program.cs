@@ -68,7 +68,7 @@ namespace Assignment_7___Pets_Continued
             }
 
             //Print the output
-            Console.WriteLine();
+            Console.Clear();
             Console.WriteLine(border);
             foreach (Pet p in petArray)
             {
@@ -78,7 +78,7 @@ namespace Assignment_7___Pets_Continued
             Console.WriteLine((youngCount > 1) ? stringYoung + " are your youngest pets" : stringYoung + " is your youngest pet");
             Console.WriteLine((oldCount > 1) ? stringOld + " are your oldest pets" : stringOld + " is your oldest pet");
             Console.WriteLine(border);
-            Pet.PrintPetStats();
+            Pet.PrintPetSummary();
             Console.ReadKey();
         }
     }
