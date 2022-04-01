@@ -10,6 +10,10 @@ namespace Assignment_7___Pets_Continued
         public static int totalNumberOfPets = 0, sumOfAllPetAges = 0;
         public static bool allFixed = true; // need to declare this true by default so any single false will make it false
 
+        /// <summary>
+        /// Prints out a summary of the Pets.  The total number owned, their age total, and the average age.
+        /// Also checks if all Pets are fixed and displays message appropriately.
+        /// </summary>
         public static void PrintPetSummary()
         {
             Console.WriteLine("You have {0} pets", totalNumberOfPets);
@@ -18,6 +22,9 @@ namespace Assignment_7___Pets_Continued
             Console.WriteLine("Which means their average age is approximately {0}", sum.ToString("#.##")); // format for 2 decimal points
             Console.WriteLine((allFixed) ? "Thank you for helping to control the pet population" : "Help control the pet population, have your pets spayed or neutered"); //RIP Bob
         }
+        /// <summary>
+        /// Add 1 to current age of Pet and display birthday celebration message
+        /// </summary>
         public void HappyBirthday()
         {
             Console.Clear();
@@ -26,6 +33,10 @@ namespace Assignment_7___Pets_Continued
             Console.WriteLine("{0} is now {1} years old!", name, age);
         }
 
+        /// <summary>
+        /// Add or subtract from totalNumberOfPets and update sumOfAllPetAges
+        /// </summary>
+        /// <param name="addto">true if adding pet</param>
         public void AddRemove(bool addto)
         {
             totalNumberOfPets = (addto) ? totalNumberOfPets+1 : totalNumberOfPets-1;

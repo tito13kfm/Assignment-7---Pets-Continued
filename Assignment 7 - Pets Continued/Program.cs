@@ -7,55 +7,57 @@ namespace Assignment_7___Pets_Continued
     {
         static void Main(string[] args)
         {
-            int numberPets = IO.ReadPosInt("How many pets do you own?");
+            bool done = false;
             string border = "\n======================================================\n";
 
-            //declare an array of Pet objects of specified size
-            Pet[] petArray = new Pet[numberPets];
+            //declare a list of Pet objects
+             List<Pet> petList = new List<Pet>();
+
+            //Menu of choices for the user
+
 
             //loop to collect data from user
-            for (int i = 0; i < petArray.Length; i++)
+            while(!done)
             {
-                string name = IO.Read("\nWhat is the name of pet #" + (i + 1) + ":");
-                int age = IO.ReadPosInt("How old is " + name + ":");
-                string breed = IO.Read("What breed is " + name + ":");
-                bool spayed = IO.ReadYesNo("Is " + name + " fixed? (Yes/No):");
-
-                //create new instances of Pet object
-                petArray[i] = new Pet() { name = name, age = age, breed = breed, spayed = spayed };
-                petArray[i].AddRemove(true);
-                Pet.allFixed = Pet.allFixed & spayed; //This will return false if any single pet isn't fixed
+                Pet newPet = new Pet();
+                newPet.name = IO.Read("What is the name of pet #" + (petList.Count + 1) + ":");
+                newPet.age = IO.ReadPosInt("How old is " + newPet.name + ":");
+                newPet.breed = IO.Read("What breed is " + newPet.name + ":");
+                newPet.spayed = IO.ReadYesNo("Is " + newPet.name + " fixed? (Yes/No):");
+                Pet.allFixed = Pet.allFixed & newPet.spayed;
+                petList.Add(newPet);
+                done = IO.ReadYesNo("Do you want to add another pet?") ? false : true;
             }
 
             //assume first pet object is both youngest and oldest
-            int youngest = petArray[0].age;
-            int oldest = petArray[0].age;
-            string stringYoung = petArray[0].name, stringOld = petArray[0].name;
+            int youngest = petList[0].age;
+            int oldest = petList[0].age;
+            string stringYoung = petList[0].name, stringOld = petList[0].name;
 
             int youngCount = 1, oldCount = 1; // let's keep a count so we can make the english language make sense below
 
 
             //Loop to check age against assumed youngest and oldest pets.  Build strings based on age of pet being evaluated
-            for (int i = 1; i < petArray.Length; i++)
+            for (int i = 1; i < petList.Count; i++)
             {
-                switch (petArray[i].age)
+                switch (petList[i].age)
                 {
                     case int n when n < youngest:
-                        stringYoung = petArray[i].name;
-                        youngest = petArray[i].age;
+                        stringYoung = petList[i].name;
+                        youngest = petList[i].age;
                         youngCount = 1;
                         break;
                     case int n when n == youngest:
-                        stringYoung = stringYoung + " & " + petArray[i].name;
+                        stringYoung = stringYoung + " & " + petList[i].name;
                         youngCount++;
                         break;
                     case int n when n > oldest:
-                        stringOld = petArray[i].name;
-                        oldest = petArray[i].age;
+                        stringOld = petList[i].name;
+                        oldest = petList[i].age;
                         oldCount = 1;
                         break;
                     case int n when n == oldest:
-                        stringOld = stringOld + " & " + petArray[i].name;
+                        stringOld = stringOld + " & " + petList[i].name;
                         oldCount++;
                         break;
                     default:
@@ -68,7 +70,7 @@ namespace Assignment_7___Pets_Continued
             //Print the output
             Console.Clear();
             Console.WriteLine(border);
-            foreach (Pet p in petArray)
+            foreach (Pet p in petList)
             {
                 Console.WriteLine("You have a {0} named {1} who is {2} years old and is {3}fixed.", p.breed, p.name, p.age, p.spayed ? "" : "NOT ");
             }
