@@ -25,5 +25,11 @@ namespace Assignment_7___Pets_Continued
             this.age++;
             Console.WriteLine("{0} is now {1} years old!", name, age);
         }
+
+        public void AddRemove(bool addto)
+        {
+            totalNumberOfPets = (addto) ? totalNumberOfPets++ : totalNumberOfPets--;
+            sumOfAllPetAges = (addto) ? sumOfAllPetAges+=age : sumOfAllPetAges -= age;
+        }
     }
 }
