@@ -1,5 +1,5 @@
 ﻿using System;
-
+using System.Collections.Generic;
 
 namespace Assignment_7___Pets_Continued
 {
@@ -14,7 +14,7 @@ namespace Assignment_7___Pets_Continued
             Pet[] petArray = new Pet[numberPets];
 
             //loop to collect data from user
-            for (int i = 0; i < numberPets; i++)
+            for (int i = 0; i < petArray.Length; i++)
             {
                 string name = IO.Read("\nWhat is the name of pet #" + (i + 1) + ":");
                 int age = IO.ReadPosInt("How old is " + name + ":");
@@ -22,10 +22,8 @@ namespace Assignment_7___Pets_Continued
                 bool spayed = IO.ReadYesNo("Is " + name + " fixed? (Yes/No):");
 
                 //create new instances of Pet object
-                petArray[i] = new Pet()
-                { name = name, age = age, breed = breed , spayed = spayed};
-                Pet.totalNumberOfPets++;
-                Pet.sumOfAllPetAges += (int)age; //add the age of current pet to the sume of all pets
+                petArray[i] = new Pet() { name = name, age = age, breed = breed, spayed = spayed };
+                petArray[i].AddRemove(true);
                 Pet.allFixed = Pet.allFixed & spayed; //This will return false if any single pet isn't fixed
             }
 

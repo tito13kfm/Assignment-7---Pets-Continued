@@ -28,7 +28,7 @@ namespace Assignment_7___Pets_Continued
 
         public void AddRemove(bool addto)
         {
-            totalNumberOfPets = (addto) ? totalNumberOfPets++ : totalNumberOfPets--;
+            totalNumberOfPets = (addto) ? totalNumberOfPets+1 : totalNumberOfPets-1;
             sumOfAllPetAges = (addto) ? sumOfAllPetAges+=age : sumOfAllPetAges -= age;
         }
     }
