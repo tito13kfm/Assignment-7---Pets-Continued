@@ -18,5 +18,12 @@ namespace Assignment_7___Pets_Continued
             Console.WriteLine("Which means their average age is approximately {0}", sum.ToString("#.##")); // format for 2 decimal points
             Console.WriteLine((allFixed) ? "Thank you for helping to control the pet population" : "Help control the pet population, have your pets spayed or neutered"); //RIP Bob
         }
+        public void HappyBirthday()
+        {
+            Console.Clear();
+            Console.WriteLine("Happy Birthday {0}!!", name);
+            this.age++;
+            Console.WriteLine("{0} is now {1} years old!", name, age);
+        }
     }
 }

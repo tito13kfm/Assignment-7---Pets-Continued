@@ -7,7 +7,7 @@ namespace Assignment_7___Pets_Continued
     {
         static void Main(string[] args)
         {
-            int numberPets = IO.ReadPosInt("How many pets do you own? ");
+            int numberPets = IO.ReadPosInt("How many pets do you own?");
             string border = "\n======================================================\n";
 
             //declare an array of Pet objects of specified size
@@ -16,10 +16,10 @@ namespace Assignment_7___Pets_Continued
             //loop to collect data from user
             for (int i = 0; i < numberPets; i++)
             {
-                string name = IO.Read("\nWhat is the name of pet #" + (i + 1) + ": ");
-                int age = IO.ReadPosInt("How old is " + name + ": ");
-                string breed = IO.Read("What breed is " + name + ": ");
-                bool spayed = IO.ReadYesNo("Is " + name + " fixed? (Yes/No): ");
+                string name = IO.Read("\nWhat is the name of pet #" + (i + 1) + ":");
+                int age = IO.ReadPosInt("How old is " + name + ":");
+                string breed = IO.Read("What breed is " + name + ":");
+                bool spayed = IO.ReadYesNo("Is " + name + " fixed? (Yes/No):");
 
                 //create new instances of Pet object
                 petArray[i] = new Pet()
