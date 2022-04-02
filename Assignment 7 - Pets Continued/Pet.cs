@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Assignment_7___Pets_Continued
 {
@@ -7,6 +8,7 @@ namespace Assignment_7___Pets_Continued
         public string name, breed;
         public int age;
         public bool spayed;
+        public static bool done;
         public static int totalNumberOfPets = 0, sumOfAllPetAges = 0;
         public static bool allFixed = true; // need to declare this true by default so any single false will make it false
 
@@ -22,6 +24,8 @@ namespace Assignment_7___Pets_Continued
             Console.WriteLine("Which means their average age is approximately {0}", sum.ToString("#.##")); // format for 2 decimal points
             Console.WriteLine((allFixed) ? "Thank you for helping to control the pet population" : "Help control the pet population, have your pets spayed or neutered"); //RIP Bob
         }
+
+
         /// <summary>
         /// Add 1 to current age of Pet and display birthday celebration message
         /// </summary>
@@ -39,8 +43,24 @@ namespace Assignment_7___Pets_Continued
         /// <param name="addto">true if adding pet</param>
         public void AddRemove(bool addto)
         {
-            totalNumberOfPets = (addto) ? totalNumberOfPets+1 : totalNumberOfPets-1;
-            sumOfAllPetAges = (addto) ? sumOfAllPetAges+=age : sumOfAllPetAges -= age;
+            totalNumberOfPets = (addto) ? totalNumberOfPets + 1 : totalNumberOfPets - 1;
+            sumOfAllPetAges = (addto) ? sumOfAllPetAges += age : sumOfAllPetAges -= age;
+        }
+
+        public static void AddPets(List<Pet> petList)
+        {
+            while (!done)
+            {
+                Pet newPet = new Pet();
+                newPet.name = IO.Read("What is the name of pet #" + (petList.Count + 1) + ":");
+                newPet.age = IO.ReadPosInt("How old is " + newPet.name + ":");
+                newPet.breed = IO.Read("What breed is " + newPet.name + ":");
+                newPet.spayed = IO.ReadYesNo("Is " + newPet.name + " fixed? (Yes/No):");
+                newPet.AddRemove(true);
+                Pet.allFixed = Pet.allFixed & newPet.spayed;
+                petList.Add(newPet);
+                done = IO.ReadYesNo("Do you want to add another pet?") ? false : true;
+            }
         }
     }
 }
