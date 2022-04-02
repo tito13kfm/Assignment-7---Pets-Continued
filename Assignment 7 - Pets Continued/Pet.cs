@@ -55,14 +55,19 @@ namespace Assignment_7___Pets_Continued
             while (!done)
             {
                 Pet newPet = new Pet();
+                Console.Clear();
                 newPet.name = IO.Read("What is the name of pet #" + (petList.Count + 1) + ":");
                 newPet.age = IO.ReadPosInt("How old is " + newPet.name + ":");
                 newPet.breed = IO.Read("What breed is " + newPet.name + ":");
                 newPet.spayed = IO.ReadYesNo("Is " + newPet.name + " fixed? (Yes/No):");
                 newPet.AddRemove(true);
-                Pet.allFixed = Pet.allFixed & newPet.spayed;
                 petList.Add(newPet);
                 done = IO.ReadYesNo("Do you want to add another pet?") ? false : true;
+            }
+            allFixed = true;
+            foreach(Pet pet in petList)
+            {
+                allFixed = allFixed & pet.spayed;
             }
         }
     }

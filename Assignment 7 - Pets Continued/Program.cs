@@ -5,7 +5,6 @@ namespace Assignment_7___Pets_Continued
 {
     internal class Program
     {
-
         static void Main(string[] args)
         {
             //declare a list of Pet objects
@@ -18,34 +17,42 @@ namespace Assignment_7___Pets_Continued
                 Console.Clear();
                 Console.WriteLine("There are currently {0} Pets in the list.", petList.Count);
                 Console.WriteLine("1. Add pets");
-                Console.WriteLine("2. Celebrate a birthday");
-                Console.WriteLine("3. Print Pet summary");
-                Console.WriteLine("4. Print Pet details");
-                Console.WriteLine("5. Print Youngest and Oldest Pets");
-                Console.WriteLine("6. Remove a Pet");
+                if (petList.Count > 0)
+                {
+                    Console.WriteLine("2. Celebrate a birthday");
+                    Console.WriteLine("3. Print Pet summary");
+                    Console.WriteLine("4. Print Pet details");
+                    Console.WriteLine("5. Print Youngest and Oldest Pets");
+                    Console.WriteLine("6. Remove a Pet");
+                }
                 Console.WriteLine("");
-                int selection = IO.ReadPosInt("Make a selection:");
+                string selection = IO.Read("Make a selection:");
                 switch (selection)
                 {
-                    case 1:
+                    case "1":
                         Pet.AddPets(petList);
                         break;
-                    case 2:
+                    case "2":
                         petList[SelectPet(petList)].HappyBirthday();
                         break;
-                    case 3:
+                    case "3":
                         Pet.PrintPetSummary();
                         break;
-                    case 4:
+                    case "4":
                         PrintPetDetails(petList);
                         break;
-                    case 5:
+                    case "5":
                         PrintPetAge(petList);
                         break;
-                    case 6:
+                    case "6":
                         int choice = SelectPet(petList);
                         petList[choice].AddRemove(false);
                         petList.Remove(petList[choice]);
+                        Pet.allFixed = true;
+                        foreach (Pet pet in petList)
+                        {
+                            Pet.allFixed = Pet.allFixed & pet.spayed;
+                        }
                         break;
                     default:
                         Console.WriteLine("Please make a valid selection");
@@ -108,6 +115,7 @@ namespace Assignment_7___Pets_Continued
 
         private static void PrintPetDetails(List<Pet> petList)
         {
+            Random random = new Random();
             Console.Clear();
             List<string> petStats = new List<string>();
             foreach (Pet p in petList)
@@ -116,7 +124,7 @@ namespace Assignment_7___Pets_Continued
                 petStats.Add(s);
             }
             int length = Boxify.FindLongest(petStats);
-            Console.WriteLine(Boxify.BoxMe(petStats, length, 'L', 1));
+            Console.WriteLine(Boxify.BoxMe(petStats, length, 'L', random.Next(1,9)));
             Console.ReadKey();
         }
 
