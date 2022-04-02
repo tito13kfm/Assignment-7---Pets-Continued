@@ -23,6 +23,7 @@ namespace Assignment_7___Pets_Continued
             double sum = (double)sumOfAllPetAges / (double)totalNumberOfPets; // figure out average age
             Console.WriteLine("Which means their average age is approximately {0}", sum.ToString("#.##")); // format for 2 decimal points
             Console.WriteLine((allFixed) ? "Thank you for helping to control the pet population" : "Help control the pet population, have your pets spayed or neutered"); //RIP Bob
+            Console.ReadKey();
         }
 
 
