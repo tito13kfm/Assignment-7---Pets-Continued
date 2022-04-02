@@ -48,11 +48,7 @@ namespace Assignment_7___Pets_Continued
                         int choice = SelectPet(petList);
                         petList[choice].AddRemove(false);
                         petList.Remove(petList[choice]);
-                        Pet.allFixed = true;
-                        foreach (Pet pet in petList)
-                        {
-                            Pet.allFixed = Pet.allFixed & pet.spayed;
-                        }
+                        Pet.UpdateFixed(petList);
                         break;
                     default:
                         Console.WriteLine("Please make a valid selection");

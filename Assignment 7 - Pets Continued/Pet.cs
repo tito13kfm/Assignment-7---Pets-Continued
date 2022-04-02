@@ -64,8 +64,13 @@ namespace Assignment_7___Pets_Continued
                 petList.Add(newPet);
                 done = IO.ReadYesNo("Do you want to add another pet?") ? false : true;
             }
+            UpdateFixed(petList);
+
+        }
+        public static void UpdateFixed(List<Pet> petList)
+        {
             allFixed = true;
-            foreach(Pet pet in petList)
+            foreach (Pet pet in petList)
             {
                 allFixed = allFixed & pet.spayed;
             }
