@@ -33,8 +33,9 @@ namespace Assignment_7___Pets_Continued
         {
             Console.Clear();
             Console.WriteLine("Happy Birthday {0}!!", name);
-            this.age++;
+            age++;
             Console.WriteLine("{0} is now {1} years old!", name, age);
+            Console.ReadKey();
         }
 
         /// <summary>
@@ -49,6 +50,7 @@ namespace Assignment_7___Pets_Continued
 
         public static void AddPets(List<Pet> petList)
         {
+            done = false;
             while (!done)
             {
                 Pet newPet = new Pet();

@@ -5,25 +5,42 @@ namespace Assignment_7___Pets_Continued
 {
     internal class Program
     {
+
         static void Main(string[] args)
         {
-
             //declare a list of Pet objects
             List<Pet> petList = new List<Pet>();
+            //assume first pet object is both youngest and oldest
 
             //Menu of choices for the user will go here
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine("There are currently {0} Pets in the list.", petList.Count);
+                Console.WriteLine("1. Add pets");
+                Console.WriteLine("2. Celebrate a birthday");
+                Console.WriteLine("");
+                int selection = IO.ReadPosInt("Make a selection:");
+                switch (selection)
+                {
+                    case 1:
+                        Pet.AddPets(petList);
+                        break;
+                    case 2:
+                        petList[SelectPet(petList)].HappyBirthday();
+                        break;
+                    default:
+                        break;
+                }
 
+            }
 
-            //loop to collect data from user
-            Pet.AddPets(petList);
-            
-            //assume first pet object is both youngest and oldest
             int youngest = petList[0].age;
             int oldest = petList[0].age;
             string stringYoung = petList[0].name, stringOld = petList[0].name;
-
             int youngCount = 1, oldCount = 1; // let's keep a count so we can make the english language make sense below
 
+           
             //Loop to check age against assumed youngest and oldest pets.  Build strings based on age of pet being evaluated
             for (int i = 1; i < petList.Count; i++)
             {
@@ -71,6 +88,18 @@ namespace Assignment_7___Pets_Continued
             int length = Boxify.FindLongest(petStats);
             Console.WriteLine(Boxify.BoxMe(petStats, length, 'L', 1));
             Console.ReadKey ();
+        }
+
+        static int SelectPet(List<Pet> petList)
+        {
+            Console.Clear ();
+            for (int i = 0; i < petList.Count; i++)
+            {
+                Console.WriteLine(i+1 + ". " + petList[i].name);
+            }
+            int choice = IO.ReadPosInt("Choose") - 1;
+            return choice;
+
         }
     }
 }
