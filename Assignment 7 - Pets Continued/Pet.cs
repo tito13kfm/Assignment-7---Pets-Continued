@@ -18,11 +18,15 @@ namespace Assignment_7___Pets_Continued
         /// </summary>
         public static void PrintPetSummary()
         {
-            Console.WriteLine("You have {0} pets", totalNumberOfPets);
-            Console.WriteLine("Their ages add up to {0}", sumOfAllPetAges);
+            List<string> petSummary = new List<string>();
+            Console.Clear();
+            petSummary.Add(String.Format("You have {0} pets", totalNumberOfPets));
+            petSummary.Add(String.Format("Their ages add up to {0}", sumOfAllPetAges));
             double sum = (double)sumOfAllPetAges / (double)totalNumberOfPets; // figure out average age
-            Console.WriteLine("Which means their average age is approximately {0}", sum.ToString("#.##")); // format for 2 decimal points
-            Console.WriteLine((allFixed) ? "Thank you for helping to control the pet population" : "Help control the pet population, have your pets spayed or neutered"); //RIP Bob
+            petSummary.Add(String.Format("Which means their average age is approximately {0}", sum.ToString("#.##"))); // format for 2 decimal points
+            petSummary.Add(String.Format((allFixed) ? "Thank you for helping to control the pet population" : "Help control the pet population, have your pets spayed or neutered")); //RIP Bob
+            int length = Boxify.FindLongest(petSummary);
+            Console.WriteLine(Boxify.BoxMe(petSummary, length, 'C', 2));
             Console.ReadKey();
         }
 
@@ -90,7 +94,6 @@ namespace Assignment_7___Pets_Continued
         /// <param name="petList">List of Pets to print details of</param>
         public static void PrintPetDetails(List<Pet> petList)
         {
-            Random random = new Random();
             Console.Clear();
             List<string> petStats = new List<string>();
             foreach (Pet p in petList)
@@ -99,7 +102,7 @@ namespace Assignment_7___Pets_Continued
                 petStats.Add(s);
             }
             int length = Boxify.FindLongest(petStats);
-            Console.WriteLine(Boxify.BoxMe(petStats, length, 'L', random.Next(1, 9)));
+            Console.WriteLine(Boxify.BoxMe(petStats, length, 'L', 1));
             Console.ReadKey();
         }
 
@@ -145,13 +148,14 @@ namespace Assignment_7___Pets_Continued
             }
 
             //Print the output
+            Random random = new Random();
             Console.Clear();
             List<string> petAge = new List<string>();
             petAge.Add((youngCount > 1) ? stringYoung + " are your youngest pets" : stringYoung + " is your youngest pet");
             petAge.Add((oldCount > 1) ? stringOld + " are your oldest pets" : stringOld + " is your oldest pet");
 
             int length = Boxify.FindLongest(petAge);
-            Console.WriteLine(Boxify.BoxMe(petAge, length, 'C', 1));
+            Console.WriteLine(Boxify.BoxMe(petAge, length, 'C', random.Next(1,9)));
             Console.ReadKey();
         }
     }
