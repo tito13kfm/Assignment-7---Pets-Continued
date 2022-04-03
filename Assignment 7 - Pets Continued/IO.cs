@@ -4,7 +4,11 @@ namespace Assignment_7___Pets_Continued
 {
     internal class IO
     {
-        public static string Read(string prompt) { Console.Write(prompt + " "); return Console.ReadLine(); }
+        public static string Read(string prompt) 
+        { 
+            Console.Write(prompt + " "); 
+            return Console.ReadLine(); 
+        }
 
         public static int ReadPosInt(string prompt) // Only accepts positive integers, and returns integer.
         {
