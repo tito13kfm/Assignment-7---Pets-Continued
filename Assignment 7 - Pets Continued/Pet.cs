@@ -96,13 +96,19 @@ namespace Assignment_7___Pets_Continued
         {
             Console.Clear();
             List<string> petStats = new List<string>();
+            string line = new string('=', 54);
+            petStats.Add(String.Format("{4, -2} | {0,-15} | {1,-5} | {2,-10} | {3,-10}", "Name", "Age", "Breed", "Fixed?", "#"));
+            petStats.Add(line);
+            petStats.Add("");
+            int i = 0;
             foreach (Pet p in petList)
             {
-                string s = String.Format("You have a {0} named {1} who is {2} years old and is {3}fixed.", p.breed, p.name, p.age, p.spayed ? "" : "NOT ");
+                i++;
+                string s = String.Format("{4, -2} | {0,-15} | {1,-5} | {2,-10} | {3,-10}", p.name, p.age, p.breed, p.spayed ? "Yes" : "No ", i);
                 petStats.Add(s);
             }
-            int length = Boxify.FindLongest(petStats);
-            Console.WriteLine(Boxify.BoxMe(petStats, length, 'L', 1));
+
+            Console.WriteLine(Boxify.BoxMe(petStats, 52, 'L', 1));
             Console.ReadKey();
         }
 
@@ -155,7 +161,7 @@ namespace Assignment_7___Pets_Continued
             petAge.Add((oldCount > 1) ? stringOld + " are your oldest pets" : stringOld + " is your oldest pet");
 
             int length = Boxify.FindLongest(petAge);
-            Console.WriteLine(Boxify.BoxMe(petAge, length, 'C', random.Next(1,9)));
+            Console.WriteLine(Boxify.BoxMe(petAge, length, 'C', random.Next(1, 9)));
             Console.ReadKey();
         }
     }
