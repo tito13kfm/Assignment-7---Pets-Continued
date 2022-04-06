@@ -64,6 +64,7 @@ namespace Assignment_7___Pets_Continued
                     case "7":
                         choice = SelectPet(petList, "Select a Pet to remove");
                         petList[choice].AddRemove(false);
+                        petList[choice] = null;
                         petList.Remove(petList[choice]);
                         Pet.UpdateFixed(petList);
                         break;
@@ -78,7 +79,7 @@ namespace Assignment_7___Pets_Continued
                         break;
                     case "L":
                         fileName = IO.Read("Enter filename to Load from (animalList.bin) ");
-                        petList = LoadList(petList, fileName);
+                        petList = LoadList(fileName);
                         break;
                     default:
                         Console.WriteLine("Please make a valid selection");
@@ -92,17 +93,18 @@ namespace Assignment_7___Pets_Continued
 
         }
 
-        private static List<Pet> LoadList(List<Pet> petList, string fileName)
+        private static List<Pet> LoadList(string fileName)
         {
             string dir = @"c:\temp";
             string loadFile = Path.Combine(dir, fileName);
+            List<Pet> loadedList = new List<Pet>();
             using (Stream stream = File.Open(loadFile, FileMode.Open))
             {
                 var bformatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
 
-                petList = (List<Pet>)bformatter.Deserialize(stream);
+                loadedList = (List<Pet>)bformatter.Deserialize(stream);
             }
-            return petList;
+            return loadedList;
         }
 
         private static void SaveList(List<Pet> petList, string fileName)
