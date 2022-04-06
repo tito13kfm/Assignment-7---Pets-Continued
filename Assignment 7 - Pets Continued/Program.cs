@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace Assignment_7___Pets_Continued
 {
@@ -12,6 +14,7 @@ namespace Assignment_7___Pets_Continued
 
             //variable declarations
             int choice;
+            string fileName;
 
             //Menu of choices for user
             while (true)
@@ -29,8 +32,10 @@ namespace Assignment_7___Pets_Continued
                     Console.WriteLine("7. Remove a Pet");
                     Console.WriteLine("8. Remove all Pets");
                 }
-                Console.WriteLine("");
-                string selection = IO.Read("Make a selection:");
+                Console.WriteLine();
+                Console.WriteLine("S to Save Pets to disk, L to Load Pets from disk");
+                Console.WriteLine();
+                string selection = IO.Read("Make a selection:").ToUpper();
                 switch (selection)
                 {
                     case "1":
@@ -67,6 +72,14 @@ namespace Assignment_7___Pets_Continued
                         Pet.sumOfAllPetAges = 0;
                         Pet.totalNumberOfPets = 0;
                         break;
+                    case "S":
+                        fileName = IO.Read("Enter filename to Save to (animalList.bin) ");
+                        SaveList(petList, fileName);
+                        break;
+                    case "L":
+                        fileName = IO.Read("Enter filename to Load from (animalList.bin) ");
+                        petList = LoadList(petList, fileName);
+                        break;
                     default:
                         Console.WriteLine("Please make a valid selection");
                         Console.WriteLine("Press Enter to continue");
@@ -77,6 +90,31 @@ namespace Assignment_7___Pets_Continued
             }
 
 
+        }
+
+        private static List<Pet> LoadList(List<Pet> petList, string fileName)
+        {
+            string dir = @"c:\temp";
+            string loadFile = Path.Combine(dir, fileName);
+            using (Stream stream = File.Open(loadFile, FileMode.Open))
+            {
+                var bformatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+
+                petList = (List<Pet>)bformatter.Deserialize(stream);
+            }
+            return petList;
+        }
+
+        private static void SaveList(List<Pet> petList, string fileName)
+        {
+            string dir = @"c:\temp";
+            string saveFile = Path.Combine(dir, fileName);
+            using (Stream stream = File.Open(saveFile, FileMode.Create))
+            {
+                var bformatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+
+                bformatter.Serialize(stream, petList);
+            }
         }
 
         private static int SelectPet(List<Pet> petList, string prompt)

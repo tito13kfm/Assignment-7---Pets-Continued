@@ -3,12 +3,12 @@ using System.Collections.Generic;
 
 namespace Assignment_7___Pets_Continued
 {
+    [Serializable()]
     internal class Pet
     {
         public string name, breed;
         public int age;
         public bool spayed;
-        public static bool done;
         public static int totalNumberOfPets = 0, sumOfAllPetAges = 0;
         public static bool allFixed = true; // need to declare this true by default so any single false will make it false
 
@@ -106,7 +106,7 @@ namespace Assignment_7___Pets_Continued
         /// <param name="petList">List of Pets to add Pets to</param>
         public static void AddPets(List<Pet> petList)
         {
-            done = false;
+            bool done = false;
             while (!done)
             {
                 Pet newPet = new Pet();
