@@ -43,6 +43,53 @@ namespace Assignment_7___Pets_Continued
             Console.ReadKey();
         }
 
+        public void EditPet()
+        {
+            bool editdone = false;
+            while (!editdone)
+            {
+                Console.Clear();
+                Console.WriteLine("Editing {0}", this.name);
+                Console.WriteLine("1. Change Name");
+                Console.WriteLine("2. Change Age");
+                Console.WriteLine("3. Change Breed");
+                Console.WriteLine("4. Change Fixed status");
+
+                Console.WriteLine();
+                string selection = IO.Read("Make a selection or Q to quit:").ToUpper();
+                switch (selection)
+                {
+                    case "1":
+                        Console.WriteLine("Current Name is {0}", this.name);
+                        this.name = IO.Read("Enter new name:");
+                        break;
+                    case "2":
+                        Console.WriteLine("Current Age is {0}", this.age);
+                        this.age = IO.ReadPosInt("Enter new age:");
+                        break;
+                    case "3":
+                        Console.WriteLine("Current Breed is {0}", this.breed);
+                        this.breed = IO.Read("Enter new breed:");
+                        break;
+                    case "4":
+                        string s = this.spayed ? "Unfixing " + this.name + " somehow..." : "Fixing " + this.name + ".";
+                        this.spayed = this.spayed ? false : true;
+                        Console.WriteLine(s);
+                        Console.ReadKey();
+                        break;
+                    case "Q":
+                        editdone = true;
+                        break;
+                    default:
+                        Console.WriteLine("Please make a valid selection");
+                        Console.WriteLine("Press Enter to continue");
+                        Console.ReadKey();
+                        break;
+                }
+            }
+
+        }
+
         /// <summary>
         /// Add or subtract from totalNumberOfPets and update sumOfAllPetAges
         /// </summary>
@@ -109,7 +156,6 @@ namespace Assignment_7___Pets_Continued
             }
 
             Console.WriteLine(Boxify.BoxMe(petStats, 52, 'L', 1));
-            Console.ReadKey();
         }
 
 

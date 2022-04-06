@@ -10,6 +10,9 @@ namespace Assignment_7___Pets_Continued
             //declare a list of Pet objects
             List<Pet> petList = new List<Pet>();
 
+            //variable declarations
+            int choice;
+
             //Menu of choices for user
             while (true)
             {
@@ -22,8 +25,9 @@ namespace Assignment_7___Pets_Continued
                     Console.WriteLine("3. Print Pet summary");
                     Console.WriteLine("4. Print Pet details");
                     Console.WriteLine("5. Print Youngest and Oldest Pets");
-                    Console.WriteLine("6. Remove a Pet");
-                    Console.WriteLine("7. Remove all Pets");
+                    Console.WriteLine("6. Edit a Pet");
+                    Console.WriteLine("7. Remove a Pet");
+                    Console.WriteLine("8. Remove all Pets");
                 }
                 Console.WriteLine("");
                 string selection = IO.Read("Make a selection:");
@@ -34,24 +38,31 @@ namespace Assignment_7___Pets_Continued
                         Pet.UpdateFixed(petList);
                         break;
                     case "2":
-                        petList[SelectPet(petList)].HappyBirthday();
+                        choice = SelectPet(petList, "Who is having the birthday?");
+                        petList[choice].HappyBirthday();
                         break;
                     case "3":
                         Pet.PrintPetSummary();
                         break;
                     case "4":
                         Pet.PrintPetDetails(petList);
+                        Console.ReadKey();
                         break;
                     case "5":
                         Pet.PrintPetAge(petList);
                         break;
                     case "6":
-                        int choice = SelectPet(petList);
+                        choice = SelectPet(petList, "Which Pet do you wish to edit?");
+                        petList[choice].EditPet();
+                        Pet.UpdateFixed(petList);
+                        break;
+                    case "7":
+                        choice = SelectPet(petList, "Select a Pet to remove");
                         petList[choice].AddRemove(false);
                         petList.Remove(petList[choice]);
                         Pet.UpdateFixed(petList);
                         break;
-                    case "7":
+                    case "8":
                         petList.Clear();
                         Pet.sumOfAllPetAges = 0;
                         Pet.totalNumberOfPets = 0;
@@ -68,16 +79,11 @@ namespace Assignment_7___Pets_Continued
 
         }
 
-        private static int SelectPet(List<Pet> petList)
+        private static int SelectPet(List<Pet> petList, string prompt)
         {
-            Console.Clear();
-            for (int i = 0; i < petList.Count; i++)
-            {
-                Console.WriteLine("{0}. {1} - {2} year old {3}", i + 1, petList[i].name, petList[i].age, petList[i].breed);
-            }
-            int choice = IO.ReadPosInt("Choose") - 1;
+            Pet.PrintPetDetails(petList);
+            int choice = IO.ReadPosInt(prompt) - 1;
             return choice;
-
         }
     }
 }
