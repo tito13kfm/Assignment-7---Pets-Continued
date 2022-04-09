@@ -42,31 +42,49 @@ namespace Assignment_7___Pets_Continued
                         Pet.UpdateAgeStatics(petList);
                         break;
                     case "2":
-                        Pet.PrintPetSummary();
+                        if (petList.Count > 0)
+                        {
+                            Pet.PrintPetSummary();
+                        }
                         break;
                     case "3":
-                        Pet.PrintPetDetails(petList);
-                        Console.ReadKey();
+                        if (petList.Count > 0)
+                        {
+                            Pet.PrintPetDetails(petList);
+                            Console.ReadKey();
+                        }
                         break;
                     case "4":
-                        Pet.PrintPetAge(petList);
+                        if (petList.Count > 0)
+                        {
+                            Pet.PrintPetAge(petList);
+                        }
                         break;
                     case "5":
-                        choice = SelectPet(petList, "Which Pet do you wish to edit?");
-                        petList[choice].EditPet();
-                        Pet.UpdateFixed(petList);
-                        Pet.UpdateAgeStatics(petList);
+                        if (petList.Count > 0)
+                        {
+                            choice = SelectPet(petList, "Which Pet do you wish to edit?");
+                            petList[choice].EditPet();
+                            Pet.UpdateFixed(petList);
+                            Pet.UpdateAgeStatics(petList);
+                        }
                         break;
                     case "6":
-                        choice = SelectPet(petList, "Select a Pet to remove");
-                        petList[choice] = null;
-                        petList.Remove(petList[choice]);
-                        Pet.UpdateFixed(petList);
-                        Pet.UpdateAgeStatics(petList);
+                        if (petList.Count > 0)
+                        {
+                            choice = SelectPet(petList, "Select a Pet to remove");
+                            petList[choice] = null;
+                            petList.Remove(petList[choice]);
+                            Pet.UpdateFixed(petList);
+                            Pet.UpdateAgeStatics(petList);
+                        }
                         break;
                     case "7":
-                        petList.Clear();
-                        Pet.UpdateAgeStatics(petList);
+                        if (petList.Count > 0)
+                        {
+                            petList.Clear();
+                            Pet.UpdateAgeStatics(petList);
+                        }
                         break;
                     case "S":
                         fileName = IO.Read("Enter filename to Save to (animalList.bin) ");
