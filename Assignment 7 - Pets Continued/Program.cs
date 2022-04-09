@@ -23,13 +23,12 @@ namespace Assignment_7___Pets_Continued
                 Console.WriteLine("1. Add pets");
                 if (petList.Count > 0)
                 {
-                    Console.WriteLine("2. Celebrate a birthday");
-                    Console.WriteLine("3. Print Pet summary");
-                    Console.WriteLine("4. Print Pet details");
-                    Console.WriteLine("5. Print Youngest and Oldest Pets");
-                    Console.WriteLine("6. Edit a Pet");
-                    Console.WriteLine("7. Remove a Pet");
-                    Console.WriteLine("8. Remove all Pets");
+                    Console.WriteLine("2. Print Pet summary");
+                    Console.WriteLine("3. Print Pet details");
+                    Console.WriteLine("4. Print Youngest and Oldest Pets");
+                    Console.WriteLine("5. Edit a Pet");
+                    Console.WriteLine("6. Remove a Pet");
+                    Console.WriteLine("7. Remove all Pets");
                 }
                 Console.WriteLine();
                 Console.WriteLine("S to Save Pets to disk, L to Load Pets from disk");
@@ -43,34 +42,29 @@ namespace Assignment_7___Pets_Continued
                         Pet.UpdateAgeStatics(petList);
                         break;
                     case "2":
-                        choice = SelectPet(petList, "Who is having the birthday?");
-                        petList[choice].HappyBirthday();
-                        Pet.UpdateAgeStatics(petList);
-                        break;
-                    case "3":
                         Pet.PrintPetSummary();
                         break;
-                    case "4":
+                    case "3":
                         Pet.PrintPetDetails(petList);
                         Console.ReadKey();
                         break;
-                    case "5":
+                    case "4":
                         Pet.PrintPetAge(petList);
                         break;
-                    case "6":
+                    case "5":
                         choice = SelectPet(petList, "Which Pet do you wish to edit?");
                         petList[choice].EditPet();
                         Pet.UpdateFixed(petList);
                         Pet.UpdateAgeStatics(petList);
                         break;
-                    case "7":
+                    case "6":
                         choice = SelectPet(petList, "Select a Pet to remove");
                         petList[choice] = null;
                         petList.Remove(petList[choice]);
                         Pet.UpdateFixed(petList);
                         Pet.UpdateAgeStatics(petList);
                         break;
-                    case "8":
+                    case "7":
                         petList.Clear();
                         Pet.UpdateAgeStatics(petList);
                         break;
@@ -81,6 +75,7 @@ namespace Assignment_7___Pets_Continued
                     case "L":
                         fileName = IO.Read("Enter filename to Load from (animalList.bin) ");
                         petList = LoadList(petList, fileName);
+                        Pet.UpdateFixed(petList);
                         Pet.UpdateAgeStatics(petList);
                         break;
                     default:

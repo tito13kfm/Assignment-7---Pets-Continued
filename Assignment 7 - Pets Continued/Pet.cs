@@ -10,7 +10,7 @@ namespace Assignment_7___Pets_Continued
         private int age;
         private bool spayed;
         public static int totalNumberOfPets = 0, sumOfAllPetAges = 0;
-        public static bool allFixed = true; // need to declare this true by default so any single false will make it false
+        public static bool allFixed;
 
 
         public void SetPetVars(string name, string breed, int age, bool spayed)
@@ -45,20 +45,6 @@ namespace Assignment_7___Pets_Continued
             Console.WriteLine(Boxify.BoxMe(petSummary, length, 'C', 2));
             Console.ReadKey();
         }
-
-
-        /// <summary>
-        /// Add 1 to current age of Pet and display birthday celebration message
-        /// </summary>
-        public void HappyBirthday()
-        {
-            Console.Clear();
-            Console.WriteLine("Happy Birthday {0}!!", name);
-            age++;
-            Console.WriteLine("{0} is now {1} years old!", name, age);
-            Console.ReadKey();
-        }
-
 
         /// <summary>
         /// Updates existing pet object member variables when called.
