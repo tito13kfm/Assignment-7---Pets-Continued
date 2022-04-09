@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
 
 namespace Assignment_7___Pets_Continued
 {
@@ -79,7 +78,7 @@ namespace Assignment_7___Pets_Continued
                         break;
                     case "L":
                         fileName = IO.Read("Enter filename to Load from (animalList.bin) ");
-                        petList = LoadList(fileName);
+                        petList = LoadList(petList, fileName);
                         break;
                     default:
                         Console.WriteLine("Please make a valid selection");
@@ -93,18 +92,28 @@ namespace Assignment_7___Pets_Continued
 
         }
 
-        private static List<Pet> LoadList(string fileName)
+        private static List<Pet> LoadList(List<Pet> petList, string fileName)
         {
             string dir = @"c:\temp";
             string loadFile = Path.Combine(dir, fileName);
             List<Pet> loadedList = new List<Pet>();
-            using (Stream stream = File.Open(loadFile, FileMode.Open))
+            if (File.Exists(loadFile))
             {
-                var bformatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+                using (Stream stream = File.Open(loadFile, FileMode.Open))
+                {
+                    var bformatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
 
-                loadedList = (List<Pet>)bformatter.Deserialize(stream);
+                    loadedList = (List<Pet>)bformatter.Deserialize(stream);
+                }
+
+                return loadedList;
             }
-            return loadedList;
+            else
+            {
+                Console.WriteLine("File not found.  Press any key to continue.");
+                Console.ReadKey();
+                return petList;
+            }
         }
 
         private static void SaveList(List<Pet> petList, string fileName)
