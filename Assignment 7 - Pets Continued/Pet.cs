@@ -43,6 +43,10 @@ namespace Assignment_7___Pets_Continued
             Console.ReadKey();
         }
 
+
+        /// <summary>
+        /// Updates existing pet object member variables when called.
+        /// </summary>
         public void EditPet()
         {
             bool editdone = false;
