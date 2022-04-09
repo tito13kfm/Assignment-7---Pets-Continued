@@ -6,12 +6,28 @@ namespace Assignment_7___Pets_Continued
     [Serializable()]
     internal class Pet
     {
-        public string name, breed;
-        public int age;
-        public bool spayed;
+        private string name, breed;
+        private int age;
+        private bool spayed;
         public static int totalNumberOfPets = 0, sumOfAllPetAges = 0;
         public static bool allFixed = true; // need to declare this true by default so any single false will make it false
 
+
+        public void SetPetVars(string name, string breed, int age, bool spayed)
+        {
+            this.name = name;
+            this.breed = breed;
+            this.age = age;
+            this.spayed = spayed;
+        }
+
+        public string GetName() { return name; }
+        public string GetBreed() { return breed; }
+        public int GetAge() { return age; }
+        public bool GetSpayed() { return spayed; }
+
+        
+        
         /// <summary>
         /// Prints out a summary of the Pets.  The total number owned, their age total, and the average age.
         /// Also checks if all Pets are fixed and displays message appropriately.
@@ -95,13 +111,18 @@ namespace Assignment_7___Pets_Continued
         }
 
         /// <summary>
-        /// Add or subtract from totalNumberOfPets and update sumOfAllPetAges
+        /// Update totalNumberofPets and sumOfAllPetAges static variables
         /// </summary>
-        /// <param name="addto">true if adding, false if removing</param>
-        public void AddRemove(bool addto)
+        /// <param name="petList">List of pets to work with</param>
+        public static void UpdateAgeStatics(List<Pet> petList)
         {
-            totalNumberOfPets = (addto) ? totalNumberOfPets + 1 : totalNumberOfPets - 1;
-            sumOfAllPetAges = (addto) ? sumOfAllPetAges += age : sumOfAllPetAges -= age;
+            totalNumberOfPets = petList.Count;
+            sumOfAllPetAges = 0;
+            foreach(Pet p in petList)
+            {
+                sumOfAllPetAges += p.GetAge();
+            }
+
         }
 
         /// <summary>
@@ -115,11 +136,11 @@ namespace Assignment_7___Pets_Continued
             {
                 Pet newPet = new Pet();
                 Console.Clear();
-                newPet.name = IO.Read("What is the name of pet #" + (petList.Count + 1) + ":");
-                newPet.age = IO.ReadPosInt("How old is " + newPet.name + ":");
-                newPet.breed = IO.Read("What breed is " + newPet.name + ":");
-                newPet.spayed = IO.ReadYesNo("Is " + newPet.name + " fixed? (Yes/No):");
-                newPet.AddRemove(true);
+                string name = IO.Read("What is the name of pet #" + (petList.Count + 1) + ":");
+                int age = IO.ReadPosInt("How old is " + name + ":");
+                string breed = IO.Read("What breed is " + name + ":");
+                bool spayed = IO.ReadYesNo("Is " + name + " fixed? (Yes/No):");
+                newPet.SetPetVars(name, breed, age, spayed);
                 petList.Add(newPet);
                 done = IO.ReadYesNo("Do you want to add another pet?") ? false : true;
             }
@@ -155,7 +176,7 @@ namespace Assignment_7___Pets_Continued
             foreach (Pet p in petList)
             {
                 i++;
-                string s = String.Format("{4, -2} | {0,-15} | {1,-5} | {2,-10} | {3,-10}", p.name, p.age, p.breed, p.spayed ? "Yes" : "No ", i);
+                string s = String.Format("{4, -2} | {0,-15} | {1,-5} | {2,-10} | {3,-10}", p.GetName(), p.GetAge(), p.GetBreed(), p.GetSpayed() ? "Yes" : "No ", i);
                 petStats.Add(s);
             }
 
@@ -169,33 +190,33 @@ namespace Assignment_7___Pets_Continued
         /// <param name="petList">List of Pets to print Youngest and Oldest</param>
         public static void PrintPetAge(List<Pet> petList)
         {
-            int youngest = petList[0].age;
-            int oldest = petList[0].age;
-            string stringYoung = petList[0].name, stringOld = petList[0].name;
+            int youngest = petList[0].GetAge();
+            int oldest = petList[0].GetAge();
+            string stringYoung = petList[0].GetName(), stringOld = petList[0].GetName();
             int youngCount = 1, oldCount = 1; // let's keep a count so we can make the english language make sense below
 
 
             //Loop to check age against assumed youngest and oldest pets.  Build strings based on age of pet being evaluated
             for (int i = 1; i < petList.Count; i++)
             {
-                switch (petList[i].age)
+                switch (petList[i].GetAge())
                 {
                     case int n when n < youngest:
-                        stringYoung = petList[i].name;
-                        youngest = petList[i].age;
+                        stringYoung = petList[i].GetName();
+                        youngest = petList[i].GetAge();
                         youngCount = 1;
                         break;
                     case int n when n == youngest:
-                        stringYoung = stringYoung + " & " + petList[i].name;
+                        stringYoung = stringYoung + " & " + petList[i].GetName();
                         youngCount++;
                         break;
                     case int n when n > oldest:
-                        stringOld = petList[i].name;
-                        oldest = petList[i].age;
+                        stringOld = petList[i].GetName();
+                        oldest = petList[i].GetAge();
                         oldCount = 1;
                         break;
                     case int n when n == oldest:
-                        stringOld = stringOld + " & " + petList[i].name;
+                        stringOld = stringOld + " & " + petList[i].GetName();
                         oldCount++;
                         break;
                     default:

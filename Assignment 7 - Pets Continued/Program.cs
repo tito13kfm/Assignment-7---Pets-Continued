@@ -40,10 +40,12 @@ namespace Assignment_7___Pets_Continued
                     case "1":
                         Pet.AddPets(petList);
                         Pet.UpdateFixed(petList);
+                        Pet.UpdateAgeStatics(petList);
                         break;
                     case "2":
                         choice = SelectPet(petList, "Who is having the birthday?");
                         petList[choice].HappyBirthday();
+                        Pet.UpdateAgeStatics(petList);
                         break;
                     case "3":
                         Pet.PrintPetSummary();
@@ -59,18 +61,18 @@ namespace Assignment_7___Pets_Continued
                         choice = SelectPet(petList, "Which Pet do you wish to edit?");
                         petList[choice].EditPet();
                         Pet.UpdateFixed(petList);
+                        Pet.UpdateAgeStatics(petList);
                         break;
                     case "7":
                         choice = SelectPet(petList, "Select a Pet to remove");
-                        petList[choice].AddRemove(false);
                         petList[choice] = null;
                         petList.Remove(petList[choice]);
                         Pet.UpdateFixed(petList);
+                        Pet.UpdateAgeStatics(petList);
                         break;
                     case "8":
                         petList.Clear();
-                        Pet.sumOfAllPetAges = 0;
-                        Pet.totalNumberOfPets = 0;
+                        Pet.UpdateAgeStatics(petList);
                         break;
                     case "S":
                         fileName = IO.Read("Enter filename to Save to (animalList.bin) ");
@@ -79,6 +81,7 @@ namespace Assignment_7___Pets_Continued
                     case "L":
                         fileName = IO.Read("Enter filename to Load from (animalList.bin) ");
                         petList = LoadList(petList, fileName);
+                        Pet.UpdateAgeStatics(petList);
                         break;
                     default:
                         Console.WriteLine("Please make a valid selection");
