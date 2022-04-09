@@ -75,7 +75,7 @@ namespace Assignment_7___Pets_Continued
 
                 Console.WriteLine();
                 string selection = IO.Read("Make a selection or Q to quit:").ToUpper();
-                
+
                 //Edit member variable selected by user
                 switch (selection)
                 {
@@ -117,7 +117,7 @@ namespace Assignment_7___Pets_Continued
         public static void UpdateAgeStatics(List<Pet> petList)
         {
             totalNumberOfPets = petList.Count;
-            
+
             //Set back to 0, then add up all the individual ages and save it to sumOfAllPetAges
             sumOfAllPetAges = 0;
             foreach (Pet p in petList)
@@ -140,16 +140,16 @@ namespace Assignment_7___Pets_Continued
                 Pet newPet = new Pet();
 
                 Console.Clear();
-                
+
                 //Collect info on the new pet
                 string name = IO.Read("What is the name of pet #" + (petList.Count + 1) + ":");
                 int age = IO.ReadPosInt("How old is " + name + ":");
                 string breed = IO.Read("What breed is " + name + ":");
                 bool spayed = IO.ReadYesNo("Is " + name + " fixed? (Yes/No):");
-                
+
                 //Call set method to set the member variables
                 newPet.SetPetVars(name, breed, age, spayed);
-                
+
                 //Add new pet to list
                 petList.Add(newPet);
 
@@ -182,7 +182,7 @@ namespace Assignment_7___Pets_Continued
 
             //Create a new list of strings to feed to boxify
             List<string> petStats = new List<string>();
-            
+
             //Create the header separator line
             string line = new string('=', 54);
 
@@ -213,9 +213,9 @@ namespace Assignment_7___Pets_Continued
             int youngest = petList[0].GetAge();
             int oldest = petList[0].GetAge();
             string stringYoung = petList[0].GetName(), stringOld = petList[0].GetName();
-            
+
             // let's keep a count so we can make the english language make sense below
-            int youngCount = 1, oldCount = 1; 
+            int youngCount = 1, oldCount = 1;
 
 
             //Loop to check age against assumed youngest and oldest pets.  Build strings based on age of pet being evaluated
