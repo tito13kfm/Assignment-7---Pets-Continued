@@ -34,6 +34,9 @@ namespace Assignment_7___Pets_Continued
                 Console.WriteLine("S to Save Pets to disk, L to Load Pets from disk");
                 Console.WriteLine();
                 string selection = IO.Read("Make a selection:").ToUpper();
+
+                //Evaluate users choice and do different actions based on response.
+                //Don't allow options not presented to work with if statements
                 switch (selection)
                 {
                     case "1":
@@ -108,6 +111,12 @@ namespace Assignment_7___Pets_Continued
 
         }
 
+        /// <summary>
+        /// Load a saved list of pets in to the program from .bin format
+        /// </summary>
+        /// <param name="petList">Existing petList to return if load failed</param>
+        /// <param name="fileName">Name of file to attempt to load</param>
+        /// <returns></returns>
         private static List<Pet> LoadList(List<Pet> petList, string fileName)
         {
             string dir = @"c:\temp";
@@ -132,6 +141,12 @@ namespace Assignment_7___Pets_Continued
             }
         }
 
+
+        /// <summary>
+        /// Save list of pets to file using binary stream
+        /// </summary>
+        /// <param name="petList">List of Pets you are saving</param>
+        /// <param name="fileName">Filename to save to</param>
         private static void SaveList(List<Pet> petList, string fileName)
         {
             string dir = @"c:\temp";
@@ -144,6 +159,12 @@ namespace Assignment_7___Pets_Continued
             }
         }
 
+        /// <summary>
+        /// Returns the users choice of which Pet they are selecting
+        /// </summary>
+        /// <param name="petList">List of Pets to work with</param>
+        /// <param name="prompt">Question to ask the user</param>
+        /// <returns></returns>
         private static int SelectPet(List<Pet> petList, string prompt)
         {
             Pet.PrintPetDetails(petList);
