@@ -31,7 +31,7 @@ namespace Assignment_7___Pets_Continued
                     Console.WriteLine("7. Remove all Pets");
                 }
                 Console.WriteLine();
-                Console.WriteLine("S to Save Pets to disk, L to Load Pets from disk");
+                Console.WriteLine("S to Save Pets to disk\nL to Load Pets from disk\nQ to Quit");
                 Console.WriteLine();
                 string selection = IO.Read("Make a selection:").ToUpper();
 
@@ -99,6 +99,9 @@ namespace Assignment_7___Pets_Continued
                         petList = LoadList(petList, fileName);
                         Pet.UpdateFixed(petList);
                         Pet.UpdateAgeStatics(petList);
+                        break;
+                    case "Q":
+                        Environment.Exit(0);
                         break;
                     default:
                         Console.WriteLine("Please make a valid selection");
