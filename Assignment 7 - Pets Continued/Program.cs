@@ -94,6 +94,7 @@ namespace Assignment_7___Pets_Continued
                         SaveList(petList, fileName);
                         break;
                     case "L":
+                        ListDirectory();
                         fileName = IO.Read("Enter filename to Load from (animalList.bin) ");
                         petList = LoadList(petList, fileName);
                         Pet.UpdateFixed(petList);
@@ -112,6 +113,20 @@ namespace Assignment_7___Pets_Continued
         }
 
         /// <summary>
+        /// List all .bin files in c:\temp\
+        /// </summary>
+        private static void ListDirectory()
+        {
+            string dir = @"c:\temp";
+            var binFiles = Directory.EnumerateFiles(dir, "*.bin");
+            foreach (string file in binFiles)
+            {
+                string fileName = file.Substring(dir.Length + 1);
+                Console.WriteLine(fileName);
+            }
+        }
+
+        /// <summary>
         /// Load a saved list of pets in to the program from .bin format
         /// </summary>
         /// <param name="petList">Existing petList to return if load failed</param>
@@ -121,6 +136,7 @@ namespace Assignment_7___Pets_Continued
         {
             string dir = @"c:\temp";
             string loadFile = Path.Combine(dir, fileName);
+
             List<Pet> loadedList = new List<Pet>();
             if (File.Exists(loadFile))
             {
