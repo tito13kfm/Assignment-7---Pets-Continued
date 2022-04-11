@@ -122,17 +122,25 @@ namespace Assignment_7___Pets_Continued
         /// <param name="fileName">Filename to save to</param>
         private static void CheckExist(List<Pet> petList, string fileName)
         {
+            //build the string of where we are checking if the file exists
             string dir = @"c:\temp";
             string saveFile = Path.Combine(dir, fileName);
+
+
             if (File.Exists(saveFile))
             {
+                //if it exists, ask the user if they want to overwrite
                 bool overwrite = IO.ReadYesNo("File " + fileName + " already exists, overwrite? Yes/No");
+                
+                //if they answer yes, forward the list and fileName to the SaveList method
                 if (overwrite)
                 {
                     SaveList(petList, fileName);
                 }
                 return;
             }
+
+            //if file doesn't exist, assume it's ok to save
             SaveList(petList, fileName);
         }
 
@@ -142,6 +150,8 @@ namespace Assignment_7___Pets_Continued
         private static void ListDirectory()
         {
             string dir = @"c:\temp";
+         
+            //enumerate files in c:\test that match *.bin and list them to the string after removing the directory
             var binFiles = Directory.EnumerateFiles(dir, "*.bin");
             foreach (string file in binFiles)
             {
@@ -158,10 +168,14 @@ namespace Assignment_7___Pets_Continued
         /// <returns></returns>
         private static List<Pet> LoadList(List<Pet> petList, string fileName)
         {
+            //build the string for the filename we are trying to load
             string dir = @"c:\temp";
             string loadFile = Path.Combine(dir, fileName);
 
+            //save current List of Pets to loadedList in case file doesn't exist
             List<Pet> loadedList = new List<Pet>();
+            
+            //if the file exists that we want to load.  Read it and save contents to loadedList
             if (File.Exists(loadFile))
             {
                 using (Stream stream = File.Open(loadFile, FileMode.Open))
@@ -189,8 +203,11 @@ namespace Assignment_7___Pets_Continued
         /// <param name="fileName">Filename to save to</param>
         private static void SaveList(List<Pet> petList, string fileName)
         {
+            //Build string of file to save
             string dir = @"c:\temp";
             string saveFile = Path.Combine(dir, fileName);
+
+            //Write serialized info to binary file
             using (Stream stream = File.Open(saveFile, FileMode.Create))
             {
                 var bformatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
