@@ -91,7 +91,7 @@ namespace Assignment_7___Pets_Continued
                         break;
                     case "S":
                         fileName = IO.Read("Enter filename to Save to (animalList.bin) ");
-                        SaveList(petList, fileName);
+                        CheckExist(petList, fileName);
                         break;
                     case "L":
                         ListDirectory();
@@ -113,6 +113,27 @@ namespace Assignment_7___Pets_Continued
             }
 
 
+        }
+
+        /// <summary>
+        /// Method to check if file exists, if it does, ask to overwrite and call SaveList
+        /// </summary>
+        /// <param name="petList">List of Pets you are saving</param>
+        /// <param name="fileName">Filename to save to</param>
+        private static void CheckExist(List<Pet> petList, string fileName)
+        {
+            string dir = @"c:\temp";
+            string saveFile = Path.Combine(dir, fileName);
+            if (File.Exists(saveFile))
+            {
+                bool overwrite = IO.ReadYesNo("File " + fileName + " already exists, overwrite? Yes/No");
+                if (overwrite)
+                {
+                    SaveList(petList, fileName);
+                }
+                return;
+            }
+            SaveList(petList, fileName);
         }
 
         /// <summary>
