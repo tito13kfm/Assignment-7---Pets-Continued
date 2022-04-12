@@ -40,7 +40,7 @@ namespace Assignment_7___Pets_Continued
                 switch (selection)
                 {
                     case "1":
-                        Pet.AddPets(petList);
+                        AddPets(petList);
                         Pet.UpdateFixed(petList);
                         Pet.UpdateAgeStatics(petList);
                         break;
@@ -131,7 +131,7 @@ namespace Assignment_7___Pets_Continued
             {
                 //if it exists, ask the user if they want to overwrite
                 bool overwrite = IO.ReadYesNo("File " + fileName + " already exists, overwrite? Yes/No");
-                
+
                 //if they answer yes, forward the list and fileName to the SaveList method
                 if (overwrite)
                 {
@@ -150,7 +150,7 @@ namespace Assignment_7___Pets_Continued
         private static void ListDirectory()
         {
             string dir = @"c:\temp";
-         
+
             //enumerate files in c:\test that match *.bin and list them to the string after removing the directory
             var binFiles = Directory.EnumerateFiles(dir, "*.bin");
             foreach (string file in binFiles)
@@ -174,7 +174,7 @@ namespace Assignment_7___Pets_Continued
 
             //save current List of Pets to loadedList in case file doesn't exist
             List<Pet> loadedList = new List<Pet>();
-            
+
             //if the file exists that we want to load.  Read it and save contents to loadedList
             if (File.Exists(loadFile))
             {
@@ -227,6 +227,33 @@ namespace Assignment_7___Pets_Continued
             Pet.PrintPetDetails(petList);
             int choice = IO.ReadPosInt(prompt) - 1;
             return choice;
+        }
+
+        /// <summary>
+        /// Gather details of Pets and add their references to the List
+        /// </summary>
+        /// <param name="petList">List of Pets to add Pets to</param>
+        private static void AddPets(List<Pet> petList)
+        {
+            bool done = false;
+            while (!done)
+            {
+                Console.Clear();
+
+                //Collect info on the new pet
+                string name = IO.Read("What is the name of pet #" + (petList.Count + 1) + ":");
+                int age = IO.ReadPosInt("How old is " + name + ":");
+                string breed = IO.Read("What breed is " + name + ":");
+                bool spayed = IO.ReadYesNo("Is " + name + " fixed? (Yes/No):");
+
+                //Call set method to set the member variables
+                Pet newPet = new Pet(name, breed, age, spayed);
+
+                //Add new pet to list
+                petList.Add(newPet);
+
+                done = !IO.ReadYesNo("Do you want to add another pet?");
+            }
         }
     }
 }

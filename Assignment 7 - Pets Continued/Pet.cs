@@ -14,7 +14,7 @@ namespace Assignment_7___Pets_Continued
         public static bool allFixed;
 
         //Set method
-        public void SetPetVars(string name, string breed, int age, bool spayed)
+        public Pet(string name, string breed, int age, bool spayed)
         {
             this.name = name;
             this.breed = breed;
@@ -127,35 +127,6 @@ namespace Assignment_7___Pets_Continued
 
         }
 
-        /// <summary>
-        /// Gather details of Pets and add their references to the List
-        /// </summary>
-        /// <param name="petList">List of Pets to add Pets to</param>
-        public static void AddPets(List<Pet> petList)
-        {
-            bool done = false;
-            while (!done)
-            {
-                //instantiate a new Pet object
-                Pet newPet = new Pet();
-
-                Console.Clear();
-
-                //Collect info on the new pet
-                string name = IO.Read("What is the name of pet #" + (petList.Count + 1) + ":");
-                int age = IO.ReadPosInt("How old is " + name + ":");
-                string breed = IO.Read("What breed is " + name + ":");
-                bool spayed = IO.ReadYesNo("Is " + name + " fixed? (Yes/No):");
-
-                //Call set method to set the member variables
-                newPet.SetPetVars(name, breed, age, spayed);
-
-                //Add new pet to list
-                petList.Add(newPet);
-
-                done = IO.ReadYesNo("Do you want to add another pet?") ? false : true;
-            }
-        }
 
         /// <summary>
         /// Checks if every Pet in a List of Pets is fixed.
