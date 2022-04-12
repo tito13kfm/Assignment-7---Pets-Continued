@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
+
 namespace Assignment_7___Pets_Continued
 {
     [Serializable()]
@@ -9,7 +10,7 @@ namespace Assignment_7___Pets_Continued
         //Variable declarations
         private string name, breed;
         private int age;
-        private bool spayed;
+        private bool spayed = true;
         public static int totalNumberOfPets = 0, sumOfAllPetAges = 0;
         public static bool allFixed;
 
@@ -20,6 +21,9 @@ namespace Assignment_7___Pets_Continued
             this.breed = breed;
             this.age = age;
             this.spayed = spayed;
+            totalNumberOfPets++;
+            sumOfAllPetAges += age;
+            allFixed = allFixed & spayed;
         }
 
         //Get methods
@@ -28,32 +32,31 @@ namespace Assignment_7___Pets_Continued
         public int GetAge() { return age; }
         public bool GetSpayed() { return spayed; }
 
-
-
         /// <summary>
-        /// Prints out a summary of the Pets.  The total number owned, their age total, and the average age.
-        /// Also checks if all Pets are fixed and displays message appropriately.
+        /// Gather details of Pets and add their references to the List
         /// </summary>
-        public static void PrintPetSummary()
+        /// <param name="petList">List of Pets to add Pets to</param>
+        public static void AddPets(List<Pet> petList)
         {
-            //Create a new list of strings to feed to boxify
-            List<string> petSummary = new List<string>();
+            bool done = false;
+            while (!done)
+            {
+                Console.Clear();
 
-            Console.Clear();
+                //Collect info on the new pet
+                string name = IO.Read("What is the name of pet #" + (petList.Count + 1) + ":");
+                int age = IO.ReadPosInt("How old is " + name + ":");
+                string breed = IO.Read("What breed is " + name + ":");
+                bool spayed = IO.ReadYesNo("Is " + name + " fixed? (Yes/No):");
 
-            //Build the strings and add them to the list
-            petSummary.Add(String.Format("You have {0} pets", totalNumberOfPets));
-            petSummary.Add(String.Format("Their ages add up to {0}", sumOfAllPetAges));
-            double sum = (double)sumOfAllPetAges / (double)totalNumberOfPets; // figure out average age
-            petSummary.Add(String.Format("Which means their average age is approximately {0}", sum.ToString("#.##"))); // format for 2 decimal points
-            petSummary.Add(String.Format((allFixed) ? "Thank you for helping to control the pet population" : "Help control the pet population, have your pets spayed or neutered")); //RIP Bob
+                //Call set method to set the member variables
+                Pet newPet = new Pet(name, breed, age, spayed);
 
-            //Determine longest string in list for sizing of box
-            int length = Boxify.FindLongest(petSummary);
+                //Add new pet to list
+                petList.Add(newPet);
 
-            //Write the box to the screen
-            Console.WriteLine(Boxify.BoxMe(petSummary, length, 'C', 2));
-            Console.ReadKey();
+                done = !IO.ReadYesNo("Do you want to add another pet?");
+            }
         }
 
         /// <summary>
@@ -80,7 +83,8 @@ namespace Assignment_7___Pets_Continued
                 switch (selection)
                 {
                     case "1":
-                        Console.WriteLine("Current Name is {0}", this.name);
+                        //Next 3 Console.WriteLines show off 3 different ways to do the same thing
+                        Console.WriteLine($"Current Name is {this.name}");
                         this.name = IO.Read("Enter new name:");
                         break;
                     case "2":
@@ -88,7 +92,7 @@ namespace Assignment_7___Pets_Continued
                         this.age = IO.ReadPosInt("Enter new age:");
                         break;
                     case "3":
-                        Console.WriteLine("Current Breed is {0}", this.breed);
+                        Console.WriteLine("Current Breed is " + this.breed);
                         this.breed = IO.Read("Enter new breed:");
                         break;
                     case "4":
@@ -140,100 +144,6 @@ namespace Assignment_7___Pets_Continued
             {
                 allFixed = allFixed & pet.spayed;
             }
-        }
-
-        /// <summary>
-        /// Print out a list of formatted and Boxified text to the Console of Pet names, ages, breed, and if they
-        /// are fixed.
-        /// </summary>
-        /// <param name="petList">List of Pets to print details of</param>
-        public static void PrintPetDetails(List<Pet> petList)
-        {
-            Console.Clear();
-
-            //Create a new list of strings to feed to boxify
-            List<string> petStats = new List<string>();
-
-            //Create the header separator line
-            string line = new string('=', 54);
-
-            //add the strings to the list
-            petStats.Add(String.Format("{4, -2} | {0,-15} | {1,-5} | {2,-10} | {3,-10}", "Name", "Age", "Breed", "Fixed?", "#"));
-            petStats.Add(line);
-            petStats.Add("");
-            int i = 0;
-            foreach (Pet p in petList)
-            {
-                i++;
-                string s = String.Format("{4, -2} | {0,-15} | {1,-5} | {2,-10} | {3,-10}", p.GetName(), p.GetAge(), p.GetBreed(), p.GetSpayed() ? "Yes" : "No ", i);
-                petStats.Add(s);
-            }
-
-            //Write the boxified result to the screen
-            Console.WriteLine(Boxify.BoxMe(petStats, 52, 'L', 1));
-        }
-
-
-        /// <summary>
-        /// Print out a list of formatted and Boxified text to the Console of your youngest and oldest pets
-        /// </summary>
-        /// <param name="petList">List of Pets to print Youngest and Oldest</param>
-        public static void PrintPetAge(List<Pet> petList)
-        {
-            //assume first pet is youngest and oldest
-            int youngest = petList[0].GetAge();
-            int oldest = petList[0].GetAge();
-            string stringYoung = petList[0].GetName(), stringOld = petList[0].GetName();
-
-            // let's keep a count so we can make the english language make sense below
-            int youngCount = 1, oldCount = 1;
-
-
-            //Loop to check age against assumed youngest and oldest pets.  Build strings based on age of pet being evaluated
-            for (int i = 1; i < petList.Count; i++)
-            {
-                switch (petList[i].GetAge())
-                {
-                    case int n when n < youngest:
-                        stringYoung = petList[i].GetName();
-                        youngest = petList[i].GetAge();
-                        youngCount = 1;
-                        break;
-                    case int n when n == youngest:
-                        stringYoung = stringYoung + " & " + petList[i].GetName();
-                        youngCount++;
-                        break;
-                    case int n when n > oldest:
-                        stringOld = petList[i].GetName();
-                        oldest = petList[i].GetAge();
-                        oldCount = 1;
-                        break;
-                    case int n when n == oldest:
-                        stringOld = stringOld + " & " + petList[i].GetName();
-                        oldCount++;
-                        break;
-                    default:
-                        break;
-                }
-            }
-
-            //Print the output
-            Random random = new Random();
-            Console.Clear();
-
-            //Create a new list of strings to feed to boxify
-            List<string> petAge = new List<string>();
-
-            //Add 2 strings to list.  Uses plurals if count is > 1
-            petAge.Add((youngCount > 1) ? stringYoung + " are your youngest pets" : stringYoung + " is your youngest pet");
-            petAge.Add((oldCount > 1) ? stringOld + " are your oldest pets" : stringOld + " is your oldest pet");
-
-            //Find length of longest string in list for formatting
-            int length = Boxify.FindLongest(petAge);
-
-            //Write boxified data to the screen using a random border
-            Console.WriteLine(Boxify.BoxMe(petAge, length, 'C', random.Next(1, 9)));
-            Console.ReadKey();
         }
     }
 }

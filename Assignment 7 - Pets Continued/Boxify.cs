@@ -27,10 +27,7 @@ namespace Assignment_7___Pets_Continued
                         int padLength = border.Length - s.Length - 1;
                         //I don't like it... but you gotta do what you gotta do.
                         //Program crashes if padLength <0.. so we fudge it
-                        while (padLength < 0)
-                        {
-                            padLength++;
-                        }
+                        if (padLength < 0) { padLength = 0; }
                         string padding = new string(' ', padLength);
                         boxifiedText = boxifiedText + "\n" + vertical + " " + s + padding + vertical;
                     }
@@ -49,10 +46,7 @@ namespace Assignment_7___Pets_Continued
                     foreach (string s in yourText)
                     {
                         int padLength = (length - s.Length + 4) / 2;
-                        while (padLength < 0)
-                        {
-                            padLength++;
-                        }
+                        if (padLength < 0) { padLength = 0; }
                         string padding = new string(' ', padLength);
 
                         //This is the line of code that almost broke me.
@@ -69,10 +63,7 @@ namespace Assignment_7___Pets_Continued
                     foreach (string s in yourText)
                     {
                         int padLength = length - s.Length + 2;
-                        while (padLength < 0)
-                        {
-                            padLength++;
-                        }
+                        if (padLength < 0) { padLength = 0; }
                         string padding = new string(' ', padLength);
                         boxifiedText = boxifiedText + "\n" + vertical + padding + s + "  " + vertical;
                     }

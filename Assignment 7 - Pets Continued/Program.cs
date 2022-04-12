@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace Assignment_7___Pets_Continued
 {
@@ -40,33 +41,33 @@ namespace Assignment_7___Pets_Continued
                 switch (selection)
                 {
                     case "1":
-                        AddPets(petList);
-                        Pet.UpdateFixed(petList);
-                        Pet.UpdateAgeStatics(petList);
+                        Pet.AddPets(petList);
                         break;
                     case "2":
                         if (petList.Count > 0)
                         {
-                            Pet.PrintPetSummary();
+                            PrintPetSummary();
                         }
                         break;
                     case "3":
                         if (petList.Count > 0)
                         {
-                            Pet.PrintPetDetails(petList);
+                            PrintPetDetails(petList);
                             Console.ReadKey();
                         }
                         break;
                     case "4":
                         if (petList.Count > 0)
                         {
-                            Pet.PrintPetAge(petList);
+                            //Sort the list first by age then pass that to PrintAgeStats
+                            PrintAgeStats(SortListByAge(petList));
                         }
                         break;
                     case "5":
                         if (petList.Count > 0)
                         {
-                            choice = SelectPet(petList, "Which Pet do you wish to edit?");
+                            choice = SelectPet(petList, "Which Pet do you wish to edit?\n0 to cancel:");
+                            if (choice == -1) { break; }
                             petList[choice].EditPet();
                             Pet.UpdateFixed(petList);
                             Pet.UpdateAgeStatics(petList);
@@ -75,7 +76,8 @@ namespace Assignment_7___Pets_Continued
                     case "6":
                         if (petList.Count > 0)
                         {
-                            choice = SelectPet(petList, "Select a Pet to remove");
+                            choice = SelectPet(petList, "Which Pet do you wish to remove?\n0 to cancel:");
+                            if (choice == -1) { break; }
                             petList[choice] = null;
                             petList.Remove(petList[choice]);
                             Pet.UpdateFixed(petList);
@@ -85,8 +87,14 @@ namespace Assignment_7___Pets_Continued
                     case "7":
                         if (petList.Count > 0)
                         {
+                            for (int i = 0; i < petList.Count; i++)
+                            {
+                                petList[i] = null;
+                            }
                             petList.Clear();
-                            Pet.UpdateAgeStatics(petList);
+                            Pet.allFixed = true;
+                            Pet.sumOfAllPetAges = 0;
+                            Pet.totalNumberOfPets = 0;
                         }
                         break;
                     case "S":
@@ -224,36 +232,132 @@ namespace Assignment_7___Pets_Continued
         /// <returns></returns>
         private static int SelectPet(List<Pet> petList, string prompt)
         {
-            Pet.PrintPetDetails(petList);
+            PrintPetDetails(petList);
             int choice = IO.ReadPosInt(prompt) - 1;
+            if (choice >= petList.Count)
+            {
+                return 0;
+            }
             return choice;
         }
 
+
         /// <summary>
-        /// Gather details of Pets and add their references to the List
+        /// Accept a list of Pets, sort it by age, and return a sorted list
         /// </summary>
-        /// <param name="petList">List of Pets to add Pets to</param>
-        private static void AddPets(List<Pet> petList)
+        /// <param name="petList">List of Pets to sort</param>
+        /// <returns>Sorted List of Pets</returns>
+        public static List<Pet> SortListByAge(List<Pet> petList)
         {
-            bool done = false;
-            while (!done)
+            return petList.OrderBy(x => x.GetAge()).ToList();
+        }
+
+        /// <summary>
+        /// Print out a list of formatted and Boxified text to the Console of your youngest and oldest pets
+        /// </summary>
+        /// <param name="sortedList">List of sorted Pets to print Youngest and Oldest</param>
+        public static void PrintAgeStats(List<Pet> sortedList)
+        {
+            //Since list is sorted we can set youngest age to first in list, and oldest age to last in list
+            int youngest = sortedList.First().GetAge();
+            int oldest = sortedList.Last().GetAge();
+
+            //Set first name in list to stringYoung and last name in list to stringOld
+            string stringYoung = sortedList.First().GetName();
+            string stringOld = sortedList.Last().GetName();
+
+            //Keep track of how many to make english make sense below
+            int youngCount = 1, oldCount = 1;
+
+            //loop the remaining pets and find ages that match youngest or oldest
+            for (int i = 1; i < sortedList.Count - 1; i++)
             {
-                Console.Clear();
-
-                //Collect info on the new pet
-                string name = IO.Read("What is the name of pet #" + (petList.Count + 1) + ":");
-                int age = IO.ReadPosInt("How old is " + name + ":");
-                string breed = IO.Read("What breed is " + name + ":");
-                bool spayed = IO.ReadYesNo("Is " + name + " fixed? (Yes/No):");
-
-                //Call set method to set the member variables
-                Pet newPet = new Pet(name, breed, age, spayed);
-
-                //Add new pet to list
-                petList.Add(newPet);
-
-                done = !IO.ReadYesNo("Do you want to add another pet?");
+                if (sortedList[i].GetAge() == youngest)
+                {
+                    youngCount++;
+                    stringYoung += " & " + sortedList[i].GetName();
+                }
+                if (sortedList[i].GetAge() == oldest)
+                {
+                    oldCount++;
+                    stringOld += " & " + sortedList[i].GetName();
+                }
             }
+
+            //Prep for random number and cleanup the screen
+            Random random = new Random();
+            Console.Clear();
+
+            //Create a new list of strings to feed to boxify
+            List<string> petAge = new List<string>();
+
+            //Add 2 strings to list.  Uses plurals if count is > 1
+            petAge.Add((youngCount > 1) ? stringYoung + " are your youngest pets" : stringYoung + " is your youngest pet");
+            petAge.Add((oldCount > 1) ? stringOld + " are your oldest pets" : stringOld + " is your oldest pet");
+
+            //Find length of longest string in list for formatting
+            int length = Boxify.FindLongest(petAge);
+
+            //Write boxified data to the screen using a random border
+            Console.WriteLine(Boxify.BoxMe(petAge, length, 'C', random.Next(1, 9)));
+            Console.ReadKey();
+        }
+
+        /// <summary>
+        /// Print out a list of formatted and Boxified text to the Console of Pet names, ages, breed, and if they
+        /// are fixed.
+        /// </summary>
+        /// <param name="petList">List of Pets to print details of</param>
+        public static void PrintPetDetails(List<Pet> petList)
+        {
+            Console.Clear();
+
+            //Create a new list of strings to feed to boxify
+            List<string> petStats = new List<string>();
+
+            //Create the header separator line
+            string line = new string('=', 54);
+
+            //add the strings to the list
+            petStats.Add(String.Format("{0, -2} | {1,-15} | {2,-5} | {3,-10} | {4,-10}", "#", "Name", "Age", "Breed", "Fixed?"));
+            petStats.Add(line);
+            petStats.Add("");
+            int i = 0;
+            foreach (Pet p in petList)
+            {
+                i++;
+                string s = String.Format("{0, -2} | {1,-15} | {2,-5} | {3,-10} | {4,-10}", i, p.GetName(), p.GetAge(), p.GetBreed(), p.GetSpayed() ? "Yes" : "No ");
+                petStats.Add(s);
+            }
+
+            //Write the boxified result to the screen
+            Console.WriteLine(Boxify.BoxMe(petStats, 52, 'L', 1));
+        }
+
+        /// <summary>
+        /// Prints out a summary of the Pets.  The total number owned, their age total, and the average age.
+        /// Also checks if all Pets are fixed and displays message appropriately.
+        /// </summary>
+        public static void PrintPetSummary()
+        {
+            //Create a new list of strings to feed to boxify
+            List<string> petSummary = new List<string>();
+
+            Console.Clear();
+
+            //Build the strings and add them to the list
+            petSummary.Add(String.Format("You have {0} pets", Pet.totalNumberOfPets));
+            petSummary.Add(String.Format("Their ages add up to {0}", Pet.sumOfAllPetAges));
+            double sum = (double)Pet.sumOfAllPetAges / (double)Pet.totalNumberOfPets; // figure out average age
+            petSummary.Add(String.Format("Which means their average age is approximately {0}", sum.ToString("#.##"))); // format for 2 decimal points
+            petSummary.Add(String.Format((Pet.allFixed) ? "Thank you for helping to control the pet population" : "Help control the pet population, have your pets spayed or neutered")); //RIP Bob
+
+            //Determine longest string in list for sizing of box
+            int length = Boxify.FindLongest(petSummary);
+
+            //Write the box to the screen
+            Console.WriteLine(Boxify.BoxMe(petSummary, length, 'C', 2));
+            Console.ReadKey();
         }
     }
 }

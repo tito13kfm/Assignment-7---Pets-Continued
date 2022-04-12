@@ -14,10 +14,10 @@ namespace Assignment_7___Pets_Continued
         {
             int integer = 0;
             bool valid = false;
-            while (!valid | integer <= 0)
+            while (!valid)
             {
                 valid = int.TryParse(Read(prompt), out integer);
-                if (!valid | integer == 0) { Console.WriteLine("Please enter a valid positive integer"); }
+                if (!valid) { Console.WriteLine("Please enter a valid positive integer"); }
             }
             return integer;
         }
