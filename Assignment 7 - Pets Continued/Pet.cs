@@ -78,31 +78,31 @@ namespace Assignment_7___Pets_Continued
                 Console.WriteLine("4. Change Fixed status");
 
                 Console.WriteLine();
-                string selection = IO.Read("Make a selection or Q to quit:").ToUpper();
+                char selection = IO.ReadKey("Make a selection or q to quit:\n");
 
                 //Edit member variable selected by user
                 switch (selection)
                 {
-                    case "1":
+                    case '1':
                         //Next 3 Console.WriteLines show off 3 different ways to do the same thing
                         Console.WriteLine($"Current Name is {this.name}");
                         this.name = IO.Read("Enter new name:");
                         break;
-                    case "2":
+                    case '2':
                         Console.WriteLine("Current Age is {0}", this.age);
                         this.age = IO.ReadPosInt("Enter new age:");
                         break;
-                    case "3":
+                    case '3':
                         Console.WriteLine("Current Breed is " + this.breed);
                         this.breed = IO.Read("Enter new breed:");
                         break;
-                    case "4":
+                    case '4':
                         string s = this.spayed ? "Unfixing " + this.name + " somehow..." : "Fixing " + this.name + ".";
                         this.spayed = this.spayed ? false : true;
                         Console.WriteLine(s);
                         Console.ReadKey();
                         break;
-                    case "Q":
+                    case 'q':
                         editdone = true;
                         break;
                     default:

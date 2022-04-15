@@ -26,5 +26,12 @@ namespace Assignment_7___Pets_Continued
             bool input = (Read(prompt)).ToLower().StartsWith("y");
             return input;
         }
+
+        public static char ReadKey(string prompt)
+        {
+            Console.Write(prompt + "\n");
+            char key = Console.ReadKey(true).KeyChar;
+            return key;
+        }
     }
 }

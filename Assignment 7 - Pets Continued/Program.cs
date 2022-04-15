@@ -24,6 +24,10 @@ namespace Assignment_7___Pets_Continued
             //Clean up our mess
             Console.Clear();
 
+            //Summoning the Pythons
+            Python monty = Python.Instance;
+            monty.RandomQuoteGenerator();
+
             //Menu of choices for user
             while (true)
             {
@@ -34,44 +38,52 @@ namespace Assignment_7___Pets_Continued
                 {
                     Console.WriteLine("2. Print Pet summary");
                     Console.WriteLine("3. Print Pet details");
-                    Console.WriteLine("4. Print Youngest and Oldest Pets");
-                    Console.WriteLine("5. Edit a Pet");
-                    Console.WriteLine("6. Remove a Pet");
-                    Console.WriteLine("7. Remove all Pets");
+                    Console.WriteLine("4. Print Pet details in age order");
+                    Console.WriteLine("5. Print Youngest and Oldest Pets");
+                    Console.WriteLine("6. Edit a Pet");
+                    Console.WriteLine("7. Remove a Pet");
+                    Console.WriteLine("8. Remove all Pets");
+                    Console.WriteLine("9. Show a random Monty Python quote");
                 }
                 Console.WriteLine();
                 Console.WriteLine("S to Save Pets to disk\nL to Load Pets from disk\nQ to Quit");
                 Console.WriteLine();
-                string selection = IO.Read("Make a selection:").ToUpper();
-
+                char selection = IO.ReadKey("Make a selection:");
                 //Evaluate users choice and do different actions based on response.
                 //Don't allow options not presented to work with if statements
                 switch (selection)
                 {
-                    case "1":
+                    case '1':
                         Pet.AddPets(petList);
                         break;
-                    case "2":
+                    case '2':
                         if (petList.Count > 0)
                         {
                             PrintPetSummary();
                         }
                         break;
-                    case "3":
+                    case '3':
                         if (petList.Count > 0)
                         {
                             PrintPetDetails(petList);
                             Console.ReadKey();
                         }
                         break;
-                    case "4":
+                    case '4':
+                        if (petList.Count > 0)
+                        {
+                            PrintPetDetails(SortListByAge(petList));
+                            Console.ReadKey();
+                        }
+                        break;
+                    case '5':
                         if (petList.Count > 0)
                         {
                             //Sort the list first by age then pass that to PrintAgeStats
                             PrintAgeStats(SortListByAge(petList));
                         }
                         break;
-                    case "5":
+                    case '6':
                         if (petList.Count > 0)
                         {
                             choice = SelectPet(petList, "Which Pet do you wish to edit?\n0 to cancel:");
@@ -81,7 +93,7 @@ namespace Assignment_7___Pets_Continued
                             Pet.UpdateAgeStatics(petList);
                         }
                         break;
-                    case "6":
+                    case '7':
                         if (petList.Count > 0)
                         {
                             choice = SelectPet(petList, "Which Pet do you wish to remove?\n0 to cancel:");
@@ -92,7 +104,7 @@ namespace Assignment_7___Pets_Continued
                             Pet.UpdateAgeStatics(petList);
                         }
                         break;
-                    case "7":
+                    case '8':
                         if (petList.Count > 0)
                         {
                             for (int i = 0; i < petList.Count; i++)
@@ -105,18 +117,31 @@ namespace Assignment_7___Pets_Continued
                             Pet.totalNumberOfPets = 0;
                         }
                         break;
-                    case "S":
+                    case '9':
+                        if (petList.Count > 0)
+                        {
+                            Console.Clear();
+                            Console.WriteLine(monty.GetRandomQuote());
+                            Console.ReadKey(true);
+                        }
+                        break;
+
+                    case 'S':
+                    case 's':
                         fileName = IO.Read("Enter filename to Save to (animalList.bin) ");
                         CheckExist(petList, fileName);
                         break;
-                    case "L":
+                    case 'L':
+                    case 'l':
                         ListDirectory();
                         fileName = IO.Read("Enter filename to Load from (animalList.bin) ");
                         petList = LoadList(petList, fileName);
                         Pet.UpdateFixed(petList);
                         Pet.UpdateAgeStatics(petList);
                         break;
-                    case "Q":
+
+                    case 'Q':
+                    case 'q':
                         Console.Clear();
                         Console.WriteLine(Statics.hug);
                         Console.ReadKey();
@@ -223,6 +248,7 @@ namespace Assignment_7___Pets_Continued
         private static void SaveList(List<Pet> petList, string fileName)
         {
             //Build string of file to save
+            if(fileName == "") { return; }
             string dir = @"c:\temp";
             string saveFile = Path.Combine(dir, fileName);
 
@@ -327,7 +353,7 @@ namespace Assignment_7___Pets_Continued
             var petStats = new List<string>();
 
             //Create the header separator line
-            string line = new string('=', 54);
+            var line = new string('=', 54);
 
             //add the strings to the list
             petStats.Add(String.Format("{0, -2} | {1,-15} | {2,-5} | {3,-10} | {4,-10}", "#", "Name", "Age", "Breed", "Fixed?"));
@@ -337,7 +363,7 @@ namespace Assignment_7___Pets_Continued
             foreach (Pet p in petList)
             {
                 i++;
-                string s = String.Format("{0, -2} | {1,-15} | {2,-5} | {3,-10} | {4,-10}", i, p.GetName(), p.GetAge(), p.GetBreed(), p.GetSpayed() ? "Yes" : "No ");
+                var s = String.Format("{0, -2} | {1,-15} | {2,-5} | {3,-10} | {4,-10}", i, p.GetName(), p.GetAge(), p.GetBreed(), p.GetSpayed() ? "Yes" : "No ");
                 petStats.Add(s);
             }
 
