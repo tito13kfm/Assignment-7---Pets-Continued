@@ -10,7 +10,7 @@ namespace Assignment_7___Pets_Continued
         static void Main(string[] args)
         {
             //declare a list of Pet objects
-            List<Pet> petList = new List<Pet>();
+            var petList = new List<Pet>();
 
             //variable declarations
             int choice;
@@ -192,7 +192,7 @@ namespace Assignment_7___Pets_Continued
             string loadFile = Path.Combine(dir, fileName);
 
             //save current List of Pets to loadedList in case file doesn't exist
-            List<Pet> loadedList = new List<Pet>();
+            var loadedList = new List<Pet>();
 
             //if the file exists that we want to load.  Read it and save contents to loadedList
             if (File.Exists(loadFile))
@@ -300,7 +300,7 @@ namespace Assignment_7___Pets_Continued
             Console.Clear();
 
             //Create a new list of strings to feed to boxify
-            List<string> petAge = new List<string>();
+            var petAge = new List<string>();
 
             //Add 2 strings to list.  Uses plurals if count is > 1
             petAge.Add((youngCount > 1) ? stringYoung + " are your youngest pets at " + youngest + " years old" : stringYoung + " is your youngest pet at " + youngest + " years old");
@@ -324,7 +324,7 @@ namespace Assignment_7___Pets_Continued
             Console.Clear();
 
             //Create a new list of strings to feed to boxify
-            List<string> petStats = new List<string>();
+            var petStats = new List<string>();
 
             //Create the header separator line
             string line = new string('=', 54);
@@ -352,7 +352,7 @@ namespace Assignment_7___Pets_Continued
         public static void PrintPetSummary()
         {
             //Create a new list of strings to feed to boxify
-            List<string> petSummary = new List<string>();
+            var petSummary = new List<string>();
 
             Console.Clear();
 
