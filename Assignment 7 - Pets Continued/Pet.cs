@@ -10,7 +10,7 @@ namespace Assignment_7___Pets_Continued
         //Variable declarations
         private string name, breed;
         private int age;
-        private bool spayed = true;
+        private bool spayed;
         public static int totalNumberOfPets = 0, sumOfAllPetAges = 0;
         public static bool allFixed;
 
@@ -31,6 +31,7 @@ namespace Assignment_7___Pets_Continued
         public string GetBreed() { return breed; }
         public int GetAge() { return age; }
         public bool GetSpayed() { return spayed; }
+
 
         /// <summary>
         /// Gather details of Pets and add their references to the List

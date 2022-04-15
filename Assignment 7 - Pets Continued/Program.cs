@@ -16,6 +16,14 @@ namespace Assignment_7___Pets_Continued
             int choice;
             string fileName;
 
+            //Let's draw something fancy
+            Console.WriteLine(Statics.title);
+            Console.WriteLine("Press enter to continue...");
+            Console.ReadKey();
+
+            //Clean up our mess
+            Console.Clear();
+
             //Menu of choices for user
             while (true)
             {
@@ -109,6 +117,9 @@ namespace Assignment_7___Pets_Continued
                         Pet.UpdateAgeStatics(petList);
                         break;
                     case "Q":
+                        Console.Clear();
+                        Console.WriteLine(Statics.hug);
+                        Console.ReadKey();
                         Environment.Exit(0);
                         break;
                     default:
@@ -292,8 +303,8 @@ namespace Assignment_7___Pets_Continued
             List<string> petAge = new List<string>();
 
             //Add 2 strings to list.  Uses plurals if count is > 1
-            petAge.Add((youngCount > 1) ? stringYoung + " are your youngest pets" : stringYoung + " is your youngest pet");
-            petAge.Add((oldCount > 1) ? stringOld + " are your oldest pets" : stringOld + " is your oldest pet");
+            petAge.Add((youngCount > 1) ? stringYoung + " are your youngest pets at " + youngest + " years old" : stringYoung + " is your youngest pet at " + youngest + " years old");
+            petAge.Add((oldCount > 1) ? stringOld + " are your oldest pets at " + oldest + " years old" : stringOld + " is your oldest pet at " + oldest + " years old");
 
             //Find length of longest string in list for formatting
             int length = Boxify.FindLongest(petAge);
@@ -359,5 +370,7 @@ namespace Assignment_7___Pets_Continued
             Console.WriteLine(Boxify.BoxMe(petSummary, length, 'C', 2));
             Console.ReadKey();
         }
+
+
     }
 }
