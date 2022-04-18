@@ -45,7 +45,7 @@ namespace Assignment_7___Pets_Continued
 
             Quotes.Add("There's nothing wrong with you that an expensive operation can't prolong.");
 
-            Quotes.Add ("She's a witch! Burn her already!");
+            Quotes.Add("She's a witch! Burn her already!");
 
             Quotes.Add("Oh! Now we see the violence inherent in the system! Help, help, I'm being repressed!");
 

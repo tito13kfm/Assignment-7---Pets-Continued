@@ -23,7 +23,7 @@ namespace Assignment_7___Pets_Continued
         }
         public static bool ReadYesNo(string prompt) // Accepts any string starting with y to be returned as true.
         {
-            bool input = (Read(prompt)).ToLower().StartsWith("y");
+            bool input = Read(prompt).ToLower().StartsWith("y");
             return input;
         }
 

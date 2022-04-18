@@ -107,14 +107,18 @@ namespace Assignment_7___Pets_Continued
                     case '8':
                         if (petList.Count > 0)
                         {
-                            for (int i = 0; i < petList.Count; i++)
+                            bool sure = IO.ReadYesNo("WARNING: This action is irreversable, are you sure?");
+                            if (sure)
                             {
-                                petList[i] = null;
+                                for (int i = 0; i < petList.Count; i++)
+                                {
+                                    petList[i] = null;
+                                }
+                                petList.Clear();
+                                Pet.allFixed = true;
+                                Pet.sumOfAllPetAges = 0;
+                                Pet.totalNumberOfPets = 0;
                             }
-                            petList.Clear();
-                            Pet.allFixed = true;
-                            Pet.sumOfAllPetAges = 0;
-                            Pet.totalNumberOfPets = 0;
                         }
                         break;
                     case '9':
