@@ -25,7 +25,7 @@ namespace Assignment_7___Pets_Continued
             Console.Clear();
 
             //Summoning the Pythons
-            Python monty = Python.Instance;
+            var monty = Python.Instance;
             monty.RandomQuoteGenerator();
 
             //Menu of choices for user

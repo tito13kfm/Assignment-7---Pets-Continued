@@ -159,6 +159,8 @@ namespace Assignment_7___Pets_Continued
 
         public static int FindLongest(List<string> yourText)
         {
+            //Reset longestString back to 0 length to prevent continued reuse of old value
+            longestString = "";
             //Find longest string in List yourText
             foreach (string s in yourText)
             {

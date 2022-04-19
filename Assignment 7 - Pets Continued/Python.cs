@@ -37,7 +37,7 @@ namespace Assignment_7___Pets_Continued
 
             Quotes.Add("It’s only a wafer-thin mint, sir.");
 
-            Quotes.Add("This parrot is no more! It has ceased to be! It’s expired and gone to meet its maker! This is a late parrot! It’s a stiff! Bereft of life, it rests in peace! If you hadn’t nailed it to the perch, it would be pushing up the daisies! It’s run down the curtain and joined the choir invisible! This is an ex-parrot!");
+            Quotes.Add("This parrot is no more! It has ceased to be! It’s expired and gone to meet its maker! This is a late parrot!");
 
             Quotes.Add("Nobody expects the Spanish Inquisition!");
 
@@ -56,7 +56,12 @@ namespace Assignment_7___Pets_Continued
 
         {
             int ranNumber = random.Next(0, Quotes.Count - 1);
-            return Quotes[ranNumber];
+            var pythonQuote = new List<string>();
+            pythonQuote.Add(Quotes[ranNumber]);
+            int length = Boxify.FindLongest(pythonQuote);
+            string boxedQuote = Boxify.BoxMe(pythonQuote, length, 'C', random.Next(1, 9));
+            return boxedQuote;
+            //return Quotes[ranNumber];
         }
     }
 
