@@ -3,22 +3,22 @@ using System.Collections.Generic;
 
 namespace Assignment_7___Pets_Continued
 {
-    internal class Python
+    internal sealed class Python
     {
         Random random = new Random();
         private List<string> Quotes = new List<string>();
 
-        private static Python instance = null;
+        private static Python internalInstance;
         private Python() { }
-        public static Python Instance 
+        public static Python SharedInstance 
         {
             get 
             { 
-                if (instance == null)
+                if (internalInstance == null)
                 {
-                    instance = new Python();
+                    internalInstance = new Python();
                 }
-                return instance; 
+                return internalInstance; 
             } 
         }
 
