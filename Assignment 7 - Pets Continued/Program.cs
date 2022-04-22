@@ -290,7 +290,7 @@ namespace Assignment_7___Pets_Continued
         /// <returns>Sorted List of Pets</returns>
         public static List<Pet> SortListByAge(List<Pet> petList)
         {
-            return petList.OrderBy(x => x.GetAge()).ToList();
+            return petList.OrderBy(x => x.age).ToList();
         }
 
         /// <summary>
@@ -300,12 +300,12 @@ namespace Assignment_7___Pets_Continued
         public static void PrintAgeStats(List<Pet> sortedList)
         {
             //Since list is sorted we can set youngest age to first in list, and oldest age to last in list
-            int youngest = sortedList.First().GetAge();
-            int oldest = sortedList.Last().GetAge();
+            int youngest = sortedList.First().age;
+            int oldest = sortedList.Last().age;
 
             //Set first name in list to stringYoung and last name in list to stringOld
-            string stringYoung = sortedList.First().GetName();
-            string stringOld = sortedList.Last().GetName();
+            string stringYoung = sortedList.First().name;
+            string stringOld = sortedList.Last().name;
 
             //Keep track of how many to make english make sense below
             int youngCount = 1, oldCount = 1;
@@ -313,15 +313,15 @@ namespace Assignment_7___Pets_Continued
             //loop the remaining pets and find ages that match youngest or oldest
             for (int i = 1; i < sortedList.Count - 1; i++)
             {
-                if (sortedList[i].GetAge() == youngest)
+                if (sortedList[i].age == youngest)
                 {
                     youngCount++;
-                    stringYoung += " & " + sortedList[i].GetName();
+                    stringYoung += " & " + sortedList[i].name;
                 }
-                if (sortedList[i].GetAge() == oldest)
+                if (sortedList[i].age == oldest)
                 {
                     oldCount++;
-                    stringOld += " & " + sortedList[i].GetName();
+                    stringOld += " & " + sortedList[i].name;
                 }
             }
 
@@ -367,7 +367,7 @@ namespace Assignment_7___Pets_Continued
             foreach (Pet p in petList)
             {
                 i++;
-                var s = String.Format("{0, -2} | {1,-15} | {2,-5} | {3,-10} | {4,-10}", i, p.GetName(), p.GetAge(), p.GetBreed(), p.GetSpayed() ? "Yes" : "No ");
+                var s = String.Format("{0, -2} | {1,-15} | {2,-5} | {3,-10} | {4,-10}", i, p.name, p.age, p.breed, p.spayed ? "Yes" : "No ");
                 petStats.Add(s);
             }
 

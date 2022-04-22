@@ -8,13 +8,22 @@ namespace Assignment_7___Pets_Continued
     internal class Pet
     {
         //Variable declarations
-        private string name, breed;
-        private int age;
-        private bool spayed;
+        public string name { get; private set; }
+        public string breed { get; private set; }
+        public int age { get; private set; }
+        public bool spayed { get; private set; }
+        
         public static int totalNumberOfPets = 0, sumOfAllPetAges = 0;
         public static bool allFixed;
 
-        //Set method
+        //Constructor
+        /// <summary>
+        /// Constructor to create a new Pet object
+        /// </summary>
+        /// <param name="name">Name of pet as string</param>
+        /// <param name="breed">Breed of pet as string</param>
+        /// <param name="age">Age of pet as int</param>
+        /// <param name="spayed">Bool if pet is spayed</param>
         public Pet(string name, string breed, int age, bool spayed)
         {
             this.name = name;
@@ -25,12 +34,6 @@ namespace Assignment_7___Pets_Continued
             sumOfAllPetAges += age;
             allFixed = allFixed & spayed;
         }
-
-        //Get methods
-        public string GetName() { return name; }
-        public string GetBreed() { return breed; }
-        public int GetAge() { return age; }
-        public bool GetSpayed() { return spayed; }
 
 
         /// <summary>
@@ -127,7 +130,7 @@ namespace Assignment_7___Pets_Continued
             sumOfAllPetAges = 0;
             foreach (Pet p in petList)
             {
-                sumOfAllPetAges += p.GetAge();
+                sumOfAllPetAges += p.age;
             }
 
         }
