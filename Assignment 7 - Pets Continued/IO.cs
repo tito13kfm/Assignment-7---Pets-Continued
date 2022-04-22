@@ -33,5 +33,17 @@ namespace Assignment_7___Pets_Continued
             char key = Console.ReadKey(true).KeyChar;
             return key;
         }
+
+        public static DateTime ReadDate(string prompt)
+        {
+            bool valid = false;
+            DateTime dt=new DateTime();
+            while (!valid)
+            {
+                valid = DateTime.TryParse(Read(prompt), out dt);
+                if (!valid) { Console.WriteLine("Please enter a valid date"); }
+            }
+            return dt;
+        }
     }
 }

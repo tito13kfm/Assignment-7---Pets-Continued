@@ -49,7 +49,24 @@ namespace Assignment_7___Pets_Continued
 
                 //Collect info on the new pet
                 string name = IO.Read("What is the name of pet #" + (petList.Count + 1) + ":");
-                int age = IO.ReadPosInt("How old is " + name + ":");
+                bool knowDate = IO.ReadYesNo("Do you know " + name + "'s birthday? :");
+                int age=0;
+                if (knowDate)
+                {
+                    DateTime birthdate = IO.ReadDate("Enter birthdate for " + name + ":");
+                    // Save today's date.
+                    var today = DateTime.Today;
+
+                    // Calculate the age.
+                    age = today.Year - birthdate.Year;
+
+                    // Go back to the year in which the pet was born in case of a leap year
+                    if (birthdate.Date > today.AddYears(-age)) age--;
+                }
+                else
+                {
+                    age = IO.ReadPosInt("How old is " + name + ":");
+                }
                 string breed = IO.Read("What breed is " + name + ":");
                 bool spayed = IO.ReadYesNo("Is " + name + " fixed? (Yes/No):");
 

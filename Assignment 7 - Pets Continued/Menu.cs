@@ -27,6 +27,7 @@ namespace Assignment_7___Pets_Continued
             //Summoning the Pythons
             var monty = Python.SharedInstance;
             monty.RandomQuoteGenerator();
+
             while (true)
             {
                 Console.Clear();
@@ -127,7 +128,6 @@ namespace Assignment_7___Pets_Continued
                             Console.ReadKey(true);
                         }
                         break;
-
                     case 'S':
                     case 's':
                         fileName = IO.Read("Enter filename to Save to (animalList.bin) ");
