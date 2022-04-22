@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 
 namespace Assignment_7___Pets_Continued
 {
@@ -59,20 +57,20 @@ namespace Assignment_7___Pets_Continued
                     case '2':
                         if (petList.Count > 0)
                         {
-                            PrintPetSummary();
+                            Pet.PrintPetSummary();
                         }
                         break;
                     case '3':
                         if (petList.Count > 0)
                         {
-                            PrintPetDetails(petList);
+                            Pet.PrintPetDetails(petList);
                             Console.ReadKey();
                         }
                         break;
                     case '4':
                         if (petList.Count > 0)
                         {
-                            PrintPetDetails(SortListByAge(petList));
+                            Pet.PrintPetDetails(Pet.SortListByAge(petList));
                             Console.ReadKey();
                         }
                         break;
@@ -80,13 +78,13 @@ namespace Assignment_7___Pets_Continued
                         if (petList.Count > 0)
                         {
                             //Sort the list first by age then pass that to PrintAgeStats
-                            PrintAgeStats(SortListByAge(petList));
+                            Pet.PrintAgeStats(Pet.SortListByAge(petList));
                         }
                         break;
                     case '6':
                         if (petList.Count > 0)
                         {
-                            choice = SelectPet(petList, "Which Pet do you wish to edit?\n0 to cancel:");
+                            choice = Pet.SelectPet(petList, "Which Pet do you wish to edit?\n0 to cancel:");
                             if (choice == -1) { break; }
                             petList[choice].EditPet();
                             Pet.UpdateFixed(petList);
@@ -96,7 +94,7 @@ namespace Assignment_7___Pets_Continued
                     case '7':
                         if (petList.Count > 0)
                         {
-                            choice = SelectPet(petList, "Which Pet do you wish to remove?\n0 to cancel:");
+                            choice = Pet.SelectPet(petList, "Which Pet do you wish to remove?\n0 to cancel:");
                             if (choice == -1) { break; }
                             petList[choice] = null;
                             petList.Remove(petList[choice]);
@@ -133,13 +131,13 @@ namespace Assignment_7___Pets_Continued
                     case 'S':
                     case 's':
                         fileName = IO.Read("Enter filename to Save to (animalList.bin) ");
-                        CheckExist(petList, fileName);
+                        FileIO.CheckExist(petList, fileName);
                         break;
                     case 'L':
                     case 'l':
-                        ListDirectory();
+                        FileIO.ListDirectory();
                         fileName = IO.Read("Enter filename to Load from (animalList.bin) ");
-                        petList = LoadList(petList, fileName);
+                        petList = FileIO.LoadList(petList, fileName);
                         Pet.UpdateFixed(petList);
                         Pet.UpdateAgeStatics(petList);
                         break;
@@ -157,250 +155,7 @@ namespace Assignment_7___Pets_Continued
                         Console.ReadKey();
                         break;
                 }
-
-            }
-
-
-        }
-
-        /// <summary>
-        /// Method to check if file exists, if it does, ask to overwrite and call SaveList
-        /// </summary>
-        /// <param name="petList">List of Pets you are saving</param>
-        /// <param name="fileName">Filename to save to</param>
-        private static void CheckExist(List<Pet> petList, string fileName)
-        {
-            //build the string of where we are checking if the file exists
-            string dir = @"c:\temp";
-            string saveFile = Path.Combine(dir, fileName);
-
-
-            if (File.Exists(saveFile))
-            {
-                //if it exists, ask the user if they want to overwrite
-                bool overwrite = IO.ReadYesNo("File " + fileName + " already exists, overwrite? Yes/No");
-
-                //if they answer yes, forward the list and fileName to the SaveList method
-                if (overwrite)
-                {
-                    SaveList(petList, fileName);
-                }
-                return;
-            }
-
-            //if file doesn't exist, assume it's ok to save
-            SaveList(petList, fileName);
-        }
-
-        /// <summary>
-        /// List all .bin files in c:\temp\
-        /// </summary>
-        private static void ListDirectory()
-        {
-            string dir = @"c:\temp";
-
-            //enumerate files in c:\test that match *.bin and list them to the string after removing the directory
-            var binFiles = Directory.EnumerateFiles(dir, "*.bin");
-            foreach (string file in binFiles)
-            {
-                string fileName = file.Substring(dir.Length + 1);
-                Console.WriteLine(fileName);
             }
         }
-
-        /// <summary>
-        /// Load a saved list of pets in to the program from .bin format
-        /// </summary>
-        /// <param name="petList">Existing petList to return if load failed</param>
-        /// <param name="fileName">Name of file to attempt to load</param>
-        /// <returns></returns>
-        private static List<Pet> LoadList(List<Pet> petList, string fileName)
-        {
-            //build the string for the filename we are trying to load
-            string dir = @"c:\temp";
-            string loadFile = Path.Combine(dir, fileName);
-
-            //save current List of Pets to loadedList in case file doesn't exist
-            var loadedList = new List<Pet>();
-
-            //if the file exists that we want to load.  Read it and save contents to loadedList
-            if (File.Exists(loadFile))
-            {
-                using (Stream stream = File.Open(loadFile, FileMode.Open))
-                {
-                    var bformatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-
-                    loadedList = (List<Pet>)bformatter.Deserialize(stream);
-                }
-
-                return loadedList;
-            }
-            else
-            {
-                Console.WriteLine("File not found.  Press any key to continue.");
-                Console.ReadKey();
-                return petList;
-            }
-        }
-
-
-        /// <summary>
-        /// Save list of pets to file using binary stream
-        /// </summary>
-        /// <param name="petList">List of Pets you are saving</param>
-        /// <param name="fileName">Filename to save to</param>
-        private static void SaveList(List<Pet> petList, string fileName)
-        {
-            //Build string of file to save
-            if(fileName == "") { return; }
-            string dir = @"c:\temp";
-            string saveFile = Path.Combine(dir, fileName);
-
-            //Write serialized info to binary file
-            using (Stream stream = File.Open(saveFile, FileMode.Create))
-            {
-                var bformatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-
-                bformatter.Serialize(stream, petList);
-            }
-        }
-
-        /// <summary>
-        /// Returns the users choice of which Pet they are selecting
-        /// </summary>
-        /// <param name="petList">List of Pets to work with</param>
-        /// <param name="prompt">Question to ask the user</param>
-        /// <returns></returns>
-        private static int SelectPet(List<Pet> petList, string prompt)
-        {
-            PrintPetDetails(petList);
-            int choice = IO.ReadPosInt(prompt) - 1;
-            if (choice >= petList.Count)
-            {
-                return 0;
-            }
-            return choice;
-        }
-
-
-        /// <summary>
-        /// Accept a list of Pets, sort it by age, and return a sorted list
-        /// </summary>
-        /// <param name="petList">List of Pets to sort</param>
-        /// <returns>Sorted List of Pets</returns>
-        public static List<Pet> SortListByAge(List<Pet> petList)
-        {
-            return petList.OrderBy(x => x.age).ToList();
-        }
-
-        /// <summary>
-        /// Print out a list of formatted and Boxified text to the Console of your youngest and oldest pets
-        /// </summary>
-        /// <param name="sortedList">List of sorted Pets to print Youngest and Oldest</param>
-        public static void PrintAgeStats(List<Pet> sortedList)
-        {
-            //Since list is sorted we can set youngest age to first in list, and oldest age to last in list
-            int youngest = sortedList.First().age;
-            int oldest = sortedList.Last().age;
-
-            //Set first name in list to stringYoung and last name in list to stringOld
-            string stringYoung = sortedList.First().name;
-            string stringOld = sortedList.Last().name;
-
-            //Keep track of how many to make english make sense below
-            int youngCount = 1, oldCount = 1;
-
-            //loop the remaining pets and find ages that match youngest or oldest
-            for (int i = 1; i < sortedList.Count - 1; i++)
-            {
-                if (sortedList[i].age == youngest)
-                {
-                    youngCount++;
-                    stringYoung += " & " + sortedList[i].name;
-                }
-                if (sortedList[i].age == oldest)
-                {
-                    oldCount++;
-                    stringOld += " & " + sortedList[i].name;
-                }
-            }
-
-            //Prep for random number and cleanup the screen
-            Random random = new Random();
-            Console.Clear();
-
-            //Create a new list of strings to feed to boxify
-            var petAge = new List<string>();
-
-            //Add 2 strings to list.  Uses plurals if count is > 1
-            petAge.Add((youngCount > 1) ? stringYoung + " are your youngest pets at " + youngest + " years old" : stringYoung + " is your youngest pet at " + youngest + " years old");
-            petAge.Add((oldCount > 1) ? stringOld + " are your oldest pets at " + oldest + " years old" : stringOld + " is your oldest pet at " + oldest + " years old");
-
-            //Find length of longest string in list for formatting
-            int length = Boxify.FindLongest(petAge);
-
-            //Write boxified data to the screen using a random border
-            Console.WriteLine(Boxify.BoxMe(petAge, length, 'C', random.Next(1, 9)));
-            Console.ReadKey();
-        }
-
-        /// <summary>
-        /// Print out a list of formatted and Boxified text to the Console of Pet names, ages, breed, and if they
-        /// are fixed.
-        /// </summary>
-        /// <param name="petList">List of Pets to print details of</param>
-        public static void PrintPetDetails(List<Pet> petList)
-        {
-            Console.Clear();
-
-            //Create a new list of strings to feed to boxify
-            var petStats = new List<string>();
-
-            //Create the header separator line
-            var line = new string('=', 54);
-
-            //add the strings to the list
-            petStats.Add(String.Format("{0, -2} | {1,-15} | {2,-5} | {3,-10} | {4,-10}", "#", "Name", "Age", "Breed", "Fixed?"));
-            petStats.Add(line);
-            petStats.Add("");
-            int i = 0;
-            foreach (Pet p in petList)
-            {
-                i++;
-                var s = String.Format("{0, -2} | {1,-15} | {2,-5} | {3,-10} | {4,-10}", i, p.name, p.age, p.breed, p.spayed ? "Yes" : "No ");
-                petStats.Add(s);
-            }
-
-            //Write the boxified result to the screen
-            Console.WriteLine(Boxify.BoxMe(petStats, 52, 'L', 1));
-        }
-
-        /// <summary>
-        /// Prints out a summary of the Pets.  The total number owned, their age total, and the average age.
-        /// Also checks if all Pets are fixed and displays message appropriately.
-        /// </summary>
-        public static void PrintPetSummary()
-        {
-            //Create a new list of strings to feed to boxify
-            var petSummary = new List<string>();
-
-            Console.Clear();
-
-            //Build the strings and add them to the list
-            petSummary.Add(String.Format("You have {0} pets", Pet.totalNumberOfPets));
-            petSummary.Add(String.Format("Their ages add up to {0}", Pet.sumOfAllPetAges));
-            double sum = (double)Pet.sumOfAllPetAges / (double)Pet.totalNumberOfPets; // figure out average age
-            petSummary.Add(String.Format("Which means their average age is approximately {0}", sum.ToString("#.##"))); // format for 2 decimal points
-            petSummary.Add(String.Format((Pet.allFixed) ? "Thank you for helping to control the pet population" : "Help control the pet population, have your pets spayed or neutered")); //RIP Bob
-
-            //Determine longest string in list for sizing of box
-            int length = Boxify.FindLongest(petSummary);
-
-            //Write the box to the screen
-            Console.WriteLine(Boxify.BoxMe(petSummary, length, 'C', 2));
-            Console.ReadKey();
-        }
-
-
     }
 }

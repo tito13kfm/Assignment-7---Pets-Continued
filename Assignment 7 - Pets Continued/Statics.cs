@@ -1,6 +1,6 @@
 ﻿namespace Assignment_7___Pets_Continued
 {
-    internal class Statics
+    internal static class Statics
     {
         public static string title = @"
                       _____                    _____                _____                    _____          
