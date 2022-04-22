@@ -60,7 +60,7 @@ namespace Assignment_7___Pets_Continued
                     // Calculate the age.
                     age = today.Year - birthdate.Year;
 
-                    // Go back to the year in which the pet was born in case of a leap year
+                    // If we haven't passed the month/day yet, then subtract a year
                     if (birthdate.Date > today.AddYears(-age)) age--;
                 }
                 else
