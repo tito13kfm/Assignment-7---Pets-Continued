@@ -1,4 +1,8 @@
-﻿namespace Assignment_7___Pets_Continued
+﻿using System.Collections.Generic;
+using System.IO;
+using System.Text;
+
+namespace Assignment_7___Pets_Continued
 {
     internal static class Statics
     {
@@ -45,5 +49,9 @@
              | |  |  __/ |_\__ \    
              |_|   \___|\__|___/    
             ";
+
+
+        public static List<string> petNames = new List<string>();
+        public static List<string> petBreeds = new List<string>();
     }
 }

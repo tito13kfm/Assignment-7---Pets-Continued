@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
 
 namespace Assignment_7___Pets_Continued
 {
@@ -196,22 +198,22 @@ namespace Assignment_7___Pets_Continued
             var petStats = new List<string>();
 
             //Create the header separator line
-            var line = new string('=', 54);
+            var line = new string('=', 64);
 
             //add the strings to the list
-            petStats.Add(String.Format("{0, -2} | {1,-15} | {2,-5} | {3,-10} | {4,-10}", "#", "Name", "Age", "Breed", "Fixed?"));
+            petStats.Add(String.Format("{0, -2} | {1,-15} | {2,-5} | {3,-20} | {4,-10}", "#", "Name", "Age", "Breed", "Fixed?"));
             petStats.Add(line);
             petStats.Add("");
             int i = 0;
             foreach (Pet p in petList)
             {
                 i++;
-                var s = String.Format("{0, -2} | {1,-15} | {2,-5} | {3,-10} | {4,-10}", i, p.name, p.age, p.breed, p.spayed ? "Yes" : "No ");
+                var s = String.Format("{0, -2} | {1,-15} | {2,-5} | {3,-20} | {4,-10}", i, p.name, p.age, p.breed, p.spayed ? "Yes" : "No ");
                 petStats.Add(s);
             }
 
             //Write the boxified result to the screen
-            Console.WriteLine(Boxify.BoxMe(petStats, 52, 'L', 1));
+            Console.WriteLine(Boxify.BoxMe(petStats, 62, 'L', 1));
         }
 
         /// <summary>
@@ -299,6 +301,36 @@ namespace Assignment_7___Pets_Continued
             //Write boxified data to the screen using a random border
             Console.WriteLine(Boxify.BoxMe(petAge, length, 'C', random.Next(1, 9)));
             Console.ReadKey();
+        }
+        public static void LoadNamesAndBreeds()
+        {
+            
+            foreach (string line in File.ReadLines(@"Data\PetNames.txt", Encoding.UTF8))
+            {
+                Statics.petNames.Add(line);
+            }
+            foreach (string line in File.ReadLines(@"Data\AnimalBreeds.txt", Encoding.UTF8))
+            {
+                Statics.petBreeds.Add(line);
+            }
+        }
+
+        public static void AddRandomPet(List<Pet> petList)
+        {
+            Random random = new Random();
+            string name = Statics.petNames[random.Next(0,Statics.petNames.Count)];
+            string breed = Statics.petBreeds[random.Next(0,Statics.petBreeds.Count)];
+            int age = random.Next(1,40);
+
+            //80% chance they are spayed
+            bool spayed = random.NextDouble() < 0.8;
+
+            //Call set method to set the member variables
+            Pet newPet = new Pet(name, breed, age, spayed);
+
+            //Add new pet to list
+            petList.Add(newPet);
+
         }
     }
 }

@@ -45,7 +45,7 @@ namespace Assignment_7___Pets_Continued
                     Console.WriteLine("9. Show a random Monty Python quote");
                 }
                 Console.WriteLine();
-                Console.WriteLine("S to Save Pets to disk\nL to Load Pets from disk\nQ to Quit");
+                Console.WriteLine("R to generate random pets\nS to Save Pets to disk\nL to Load Pets from disk\nQ to Quit");
                 Console.WriteLine();
                 char selection = IO.ReadKey("Make a selection:");
                 //Evaluate users choice and do different actions based on response.
@@ -127,6 +127,12 @@ namespace Assignment_7___Pets_Continued
                             Console.WriteLine(monty.GetRandomQuote());
                             Console.ReadKey(true);
                         }
+                        break;
+                    case 'R':
+                    case 'r':
+                        if (Statics.petNames.Count < 1)
+                        { Pet.LoadNamesAndBreeds(); }
+                        Pet.AddRandomPet(petList);
                         break;
                     case 'S':
                     case 's':
