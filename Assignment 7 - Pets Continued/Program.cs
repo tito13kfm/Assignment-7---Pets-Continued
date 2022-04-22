@@ -19,7 +19,8 @@ namespace Assignment_7___Pets_Continued
             Console.Clear();
 
             //Call the menu
-            Menu.Main(petList);
+            var menu = Menu.SharedInstance;
+            menu.MainMenu(petList);
         }
     }
 }

@@ -1,14 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Assignment_7___Pets_Continued
 {
     internal class Menu
     {
-        public static void Main(List<Pet> petList)
+        private static Menu internalInstance;
+        private Menu() { }
+        public static Menu SharedInstance
+        {
+            get
+            {
+                if (internalInstance == null)
+                {
+                    internalInstance = new Menu();
+                }
+                return internalInstance;
+            }
+        }
+
+        public void MainMenu(List<Pet> petList)
         {
             //Menu of choices for user
             int choice;
