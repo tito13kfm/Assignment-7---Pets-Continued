@@ -198,22 +198,22 @@ namespace Assignment_7___Pets_Continued
             var petStats = new List<string>();
 
             //Create the header separator line
-            var line = new string('=', 64);
+            var line = new string('=', 60);
 
             //add the strings to the list
-            petStats.Add(String.Format("{0, -2} | {1,-15} | {2,-5} | {3,-20} | {4,-10}", "#", "Name", "Age", "Breed", "Fixed?"));
+            petStats.Add(String.Format("{0, -3} | {1,-15} | {2,-5} | {3,-20} | {4,-5}", "#", "Name", "Age", "Breed", "Fixed?"));
             petStats.Add(line);
             petStats.Add("");
             int i = 0;
             foreach (Pet p in petList)
             {
                 i++;
-                var s = String.Format("{0, -2} | {1,-15} | {2,-5} | {3,-20} | {4,-10}", i, p.name, p.age, p.breed, p.spayed ? "Yes" : "No ");
+                var s = String.Format("{0, -3} | {1,-15} | {2,-5} | {3,-20} | {4,-5}", i, p.name.Truncate(15), p.age, p.breed.Truncate(20), p.spayed ? "Yes" : "No ");
                 petStats.Add(s);
             }
 
             //Write the boxified result to the screen
-            Console.WriteLine(Boxify.BoxMe(petStats, 62, 'L', 1));
+            Console.WriteLine(Boxify.BoxMe(petStats, 58, 'L', 1));
         }
 
         /// <summary>
@@ -320,17 +320,19 @@ namespace Assignment_7___Pets_Continued
             Random random = new Random();
             string name = Statics.petNames[random.Next(0,Statics.petNames.Count)];
             string breed = Statics.petBreeds[random.Next(0,Statics.petBreeds.Count)];
-            int age = random.Next(1,40);
+            int age = random.Next(1,41);
 
             //80% chance they are spayed
             bool spayed = random.NextDouble() < 0.8;
 
-            //Call set method to set the member variables
+            //Call the constructor
             Pet newPet = new Pet(name, breed, age, spayed);
 
             //Add new pet to list
             petList.Add(newPet);
 
         }
+
+
     }
 }
