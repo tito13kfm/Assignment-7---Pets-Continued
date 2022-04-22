@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
 
 namespace Assignment_7___Pets_Continued
 {
@@ -302,37 +300,5 @@ namespace Assignment_7___Pets_Continued
             Console.WriteLine(Boxify.BoxMe(petAge, length, 'C', random.Next(1, 9)));
             Console.ReadKey();
         }
-        public static void LoadNamesAndBreeds()
-        {
-            
-            foreach (string line in File.ReadLines(@"Data\PetNames.txt", Encoding.UTF8))
-            {
-                Statics.petNames.Add(line);
-            }
-            foreach (string line in File.ReadLines(@"Data\AnimalBreeds.txt", Encoding.UTF8))
-            {
-                Statics.petBreeds.Add(line);
-            }
-        }
-
-        public static void AddRandomPet(List<Pet> petList)
-        {
-            Random random = new Random();
-            string name = Statics.petNames[random.Next(0,Statics.petNames.Count)];
-            string breed = Statics.petBreeds[random.Next(0,Statics.petBreeds.Count)];
-            int age = random.Next(1,41);
-
-            //80% chance they are spayed
-            bool spayed = random.NextDouble() < 0.8;
-
-            //Call the constructor
-            Pet newPet = new Pet(name, breed, age, spayed);
-
-            //Add new pet to list
-            petList.Add(newPet);
-
-        }
-
-
     }
 }

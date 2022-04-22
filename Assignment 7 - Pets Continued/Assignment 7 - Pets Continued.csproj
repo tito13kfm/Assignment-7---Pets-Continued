@@ -66,6 +66,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Python.cs" />
+    <Compile Include="RandomPet.cs" />
     <Compile Include="Statics.cs" />
     <Compile Include="StringTruncate.cs" />
   </ItemGroup>
