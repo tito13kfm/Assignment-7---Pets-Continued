@@ -61,6 +61,7 @@
     <Compile Include="Boxify.cs" />
     <Compile Include="FileIO.cs" />
     <Compile Include="IO.cs" />
+    <Compile Include="Menu.cs" />
     <Compile Include="Pet.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
