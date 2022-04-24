@@ -293,11 +293,8 @@ namespace Assignment_7___Pets_Continued
             petAge.Add((youngCount > 1) ? stringYoung + " are your youngest pets at " + youngest + " years old" : stringYoung + " is your youngest pet at " + youngest + " years old");
             petAge.Add((oldCount > 1) ? stringOld + " are your oldest pets at " + oldest + " years old" : stringOld + " is your oldest pet at " + oldest + " years old");
 
-            //Find length of longest string in list for formatting
-            int length = Boxify.FindLongest(petAge);
-
             //Write boxified data to the screen using a random border
-            Console.WriteLine(Boxify.BoxMe(petAge, length, 'C', random.Next(1, 9)));
+            Console.WriteLine(Boxify.BoxMe(petAge, Boxify.FindLongest(petAge), 'C', random.Next(1, 9)));
             Console.ReadKey();
         }
     }

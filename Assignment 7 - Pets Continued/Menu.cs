@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Assignment_7___Pets_Continued
 {
@@ -43,6 +44,7 @@ namespace Assignment_7___Pets_Continued
                     Console.WriteLine("7. Remove a Pet");
                     Console.WriteLine("8. Remove all Pets");
                     Console.WriteLine("9. Show a random Monty Python quote");
+                    Console.WriteLine("0. About This Program");
                 }
                 Console.WriteLine();
                 Console.WriteLine("R to Generate a Random Pet\nS to Save Pets to disk\nL to Load Pets from disk\nQ to Quit");
@@ -128,10 +130,16 @@ namespace Assignment_7___Pets_Continued
                             Console.ReadKey(true);
                         }
                         break;
+
+                    case '0':
+                        if (petList.Count > 0)
+                        {
+                            Process.Start("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+                        }
+                        break;
                     case 'R':
                     case 'r':
-                        if (Statics.petNames.Count < 1)
-                        { RandomPet.LoadNamesAndBreeds(); }
+                        if (Statics.petNames.Count < 1) RandomPet.LoadNamesAndBreeds(); 
                         petList.AddRandomPet();
                         break;
                     case 'S':
